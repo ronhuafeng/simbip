@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="IdProvider" IDEtalkID="9B2E0FF26823FB1CF7AB3DE38283AB5D" />
+  <component name="LeiningenProjectsManager">
+    <option name="projectFiles">
+      <list>
+        <option value="file://$PROJECT_DIR$/project.clj" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
+
