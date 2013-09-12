@@ -1,5 +1,6 @@
 (ns simbip.structure
-  (use simbip.protocol))
+  (use simbip.protocol)
+  (use simbip.parser))
 
 
 (defn create-token
@@ -40,14 +41,32 @@
 
 (defrecord Port
   [type name export? var-list tokens direction])
-
+;; var-list is a map of {:var-name-in-component :var-name-in-port's-type, ...}
 (defn create-port
   ([name export?]
-   (->Port 'Port name export? [] (atom []) 'both))
+   (->Port 'Port
+     name
+     export?
+     []
+     (atom [])
+     'both
+     ))
   ([name export? var-list]
-   (->Port 'Port name export? var-list (atom []) 'both))
+   (->Port 'Port
+     name
+     export?
+     var-list
+     (atom [])
+     'both
+     ))
   ([name export? var-list direction]
-   (->Port 'Port name export? var-list (atom []) direction)))
+   (->Port 'Port
+     name
+     export?
+     var-list
+     (atom [])
+     direction
+     )))
 
 (defn project-value
   ;; value:  {:x 1 :y 2 :z 3}
@@ -58,8 +77,9 @@
     {}
     (map
       (fn [attr]
-        {attr (attr value)})
-      (:var-list this))))
+        {attr (get value attr)})
+      (vals (:var-list this)))))
+
 
 ;; TODO: Token and retrieve-port is incompatible.
 
@@ -114,10 +134,9 @@
      target
      port
      0
-     (fn [c]
-       true)
-     (fn [c]
-       ())))
+     "" ;; guard
+     '() ;; action
+     ))
   ([name source target port time]
    (->Transition 'Transition
      name
@@ -125,30 +144,20 @@
      target
      port
      time
-     (fn [c]
-       true)
-     (fn [c]
-       ())))
-  ([name source target port time guard? action!]
-   (->Transition 'Transition
-     name
-     source
-     target
-     port
-     time
-     (fn [variables]
-       true)
-     action!)))
-
-
-
-#_ (fn t-action
-     [c]
-     (do
-       (set-variable
-         c
-         :x (+ 1
-              (get-variable c :x )))))
+     "" ;; guard
+     '() ;; action
+     ))
+  ([name source target port time guard? action-string]
+    (let [action! (build-ASTs-from-string action-string)]
+      (->Transition 'Transition
+        name
+        source
+        target
+        port
+        time
+        "" ;; guard
+        action! ;; action
+        ))))
 
 (extend-type Transition
   Queryable
@@ -173,7 +182,8 @@
   [type name
    ports places transitions
    time
-   variables])
+   variables
+   environment])
 ;; variable: {:x v-x :y v-y}
 
 (defn current-place
@@ -206,12 +216,16 @@
 
 (defn create-atomic
   ([name ports places init transitions time]
-   (let [c (->Atomic 'Atomic name
-                             ports
-                             places
-                             transitions
-                             (atom time)
-                             (atom {}))]
+   (let [ var-map (atom {})
+          environment (set-environment var-map)
+          c (->Atomic 'Atomic
+              name
+              ports
+              places
+              transitions
+              (atom time)
+              var-map
+              environment)]
      (do
        (doseq [s (:places c)]
          (clear! s))
@@ -219,14 +233,19 @@
        (enable! init)
 
        (add-port-tokens c))
+
      c))
   ([name ports places init transitions time variables]
-   (let [c (->Atomic 'Atomic name
-                             ports
-                             places
-                             transitions
-                             (atom time)
-                             (atom variables))]
+   (let [ var-map (atom variables)
+          environment (set-environment var-map)
+          c (->Atomic 'Atomic
+              name
+              ports
+              places
+              transitions
+              (atom time)
+              var-map
+              environment)]
      (do
        (doseq [s (:places c)]
          (clear! s))
@@ -260,7 +279,8 @@
     (clear! (:source t))
 
     ;; action stuff
-    ((:action! t) component)
+    (let [trans (get-trans-interface (:environment component))]
+      (build-exec-list trans (:action! t)))
 
     ;;some time stuff
     (set-time
@@ -352,14 +372,17 @@
           ()
           (set-time this (:time token)))
 
+      ;; 如果 token 中的 key 是 port 的 var-list 中的 val 中的值，说明这个变量是被 port 映射出来的
+      ;; 在外面的名字是 var-list 中 key 对应的 val 的值
         (doseq [attr (keys (:value token))]
-          (if (contains?
-                (deref (:variables this))
-                attr)
-            (set-variable
-              this
-              attr
-              (get (:value token) attr))))
+          (let [t (some
+                    #(if (= attr (val %)) %)
+                    (:var-list port))]     ;; 筛选到上面提到的 key－val 对
+            (if t
+              (set-variable
+                this
+                (key t)
+                (get (:value token) attr)))))    ;; 其实 attr 就等于 (val t)
 
         (fire-transition this t)))))
 
@@ -368,7 +391,7 @@
 (defrecord Interaction
   [type name
    port connections ;; connection {:component :port}
-   time action!])
+   time action! variables environment var-list])  ;; var-list， 类似于在 port 中的作用，完成参数代换
 
 ;; Demo of action!
 ;; connections
@@ -401,13 +424,34 @@
 
 (defn create-interaction
   ([^String name port connections ^Integer time]
-   (->Interaction 'Interaction name port connections time
-                               (fn [I direction]
-                                 (cond
-                                   (= direction 'up) {:value {} :time 0}
-                                                     (= direction 'down) (fn [token] {})))))
-  ([name port connections time action!]
-   (->Interaction 'Interaction name port connections time action!)))
+    (let [var-map (atom {})
+          environment (set-environment var-map)]
+      (->Interaction 'Interaction
+        name
+        port
+        connections
+        time
+        (fn [I direction]
+          (cond
+            (= direction 'up) {:value {} :time 0}
+            (= direction 'down) (fn [token] {})))
+        var-map
+        environment
+        {} ;; var list
+        )))
+  ([name port connections time action! var-list]
+    (let [var-map (atom {})
+          environment (set-environment var-map)]
+      (->Interaction 'Interaction
+        name
+        port
+        connections
+        time
+        action!
+        var-map
+        environment
+        var-list
+        ))))
 
 
 
@@ -421,13 +465,13 @@
     connections))
 
 (defn- fire-interaction!
-  [t token]
+  [this token]
   #_("Actually, the action part should be refactored. Because the task
       the action part completed is so heavy.")
   (let [up-token (create-token
                    (into
                      #_("up-action extracts values of variabled from each connected port.")
-                       (:value ((:action! t) t 'up))
+                       (:value ((:action! this) this 'up))
                        #_("??? why not into {}, (:value token) is correct???
                          This merge combines all new variables from up-action's computation
                          and new results from variables of outside interaction's computation.
@@ -436,11 +480,11 @@
                        (:value token))
                    (:time token))
         value (:value up-token)
-        down-tokens (((:action! t) t 'down) up-token)
+        down-tokens (((:action! this) this 'down) up-token)
         time-token (+ (:time up-token)
-                     (:time t))]
+                     (:time this))]
     ;;TODO: move time addition to 'action!' function
-    (doseq [c (:connections t)]
+    (doseq [c (:connections this)]
       #_("assign-port! generates a token for every sub-components. The token
           contains new values of variables and new timestamps.")
       (assign-port!

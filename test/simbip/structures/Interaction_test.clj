@@ -106,7 +106,7 @@
 
         I1 (create-port "I1" false)
         I2 (create-port "I2" false)
-        E1 (create-port "E1" true [:x ])
+        E1 (create-port "E1" true {:x :x})
 
         t1 (create-transition "t1" start end I1)
         t2 (create-transition "t2" start end E1)
@@ -124,7 +124,7 @@
         idle (create-place "idle")
         run (create-place "run")
 
-        R1 (create-port "R1" true [:x ])
+        R1 (create-port "R1" true {:x :x})
         R2 (create-port "R2" false)
 
         t4 (create-transition "t4" idle run R1)
@@ -139,7 +139,7 @@
              0
              {:x 2})
         ;;------------------------------------;;
-        PG (create-port "PG" true [:x1 ])
+        PG (create-port "PG" true {:x1 :x1})
         G1 (create-interaction
              "G1"
              nil
@@ -164,7 +164,8 @@
                            (:time token))
                       R1 (create-token
                            {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))})))))
+                           (:time token))}))))
+             {})
         G2 (create-interaction
              "G2"
              PG
@@ -189,7 +190,8 @@
                            (:time token))
                       R1 (create-token
                            {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))})))))]
+                           (:time token))}))))
+             {})]
     (testing "all-in-one testing of Interaction with vars."
       (is (enable? C1 E1))
       (is (enable? C2 R1))

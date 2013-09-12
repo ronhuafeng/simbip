@@ -129,7 +129,7 @@
 
 
 (deftest all-in-one-test3-with-vars
-  (let [P1 (create-port "P1" true [:x ])
+  (let [P1 (create-port "P1" true {:x :x})
         Q1 (create-port "Q1" false)
         start1 (create-place "start1")
         end1 (create-place "end1")
@@ -144,7 +144,7 @@
              0
              {:x 1 :y 1})
 
-        P2 (create-port "P2" true [:x ])
+        P2 (create-port "P2" true {:x :x})
         Q2 (create-port "Q2" false)
         start2 (create-place "start2")
         end2 (create-place "end2")
@@ -184,7 +184,8 @@
                            (:time token))
                       P2 (create-token
                            {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))})))))
+                           (:time token))}))))
+             {})
 
         EC (create-port "EC" true)
         c3 (create-compound
@@ -222,7 +223,7 @@
         (is (enable? c3 EC))))))
 
 (deftest all-in-one-test4-with-vars-hierarchy
-  (let [P1 (create-port "P1" true [:x ])
+  (let [P1 (create-port "P1" true {:x :x})
         Q1 (create-port "Q1" false)
         start1 (create-place "start1")
         end1 (create-place "end1")
@@ -237,7 +238,7 @@
              0
              {:x 2 :y 1})
 
-        P2 (create-port "P2" true [:x ])
+        P2 (create-port "P2" true {:x :x})
         Q2 (create-port "Q2" false)
         start2 (create-place "start2")
         end2 (create-place "end2")
@@ -252,7 +253,7 @@
              0
              {:x 2 :y 2})
 
-        EI (create-port "EI" true [:x1 ])
+        EI (create-port "EI" true {:x1 :x1})
         I1 (create-interaction
              "I1"
              EI
@@ -277,15 +278,16 @@
                            (:time token))
                       P2 (create-token
                            {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))})))))
+                           (:time token))}))))
+             {})
 
-        EC (create-port "EC" true [:x1 ])
+        EC (create-port "EC" true {:x1 :x1})
         c3 (create-compound
              "c3"
              [c1 c2 I1]
              [{:target EC :source EI :source-component I1}])
 
-        P4 (create-port "P4" true [:x ])
+        P4 (create-port "P4" true {:x :x})
         state (create-place "state")
         tloop (create-transition "tloop" state state P4 1)
         c4 (create-atomic
@@ -322,7 +324,7 @@
                       P4 (create-token
                            {:x (+ (:x1 v) 1)}
                            (:time token))}))))
-             )]
+             {})]
     (testing "all-in-one test 2 of Compount"
       (do
         (is (not (enable? c1)))

@@ -92,16 +92,10 @@
         end (create-place "end")
         I1 (create-port "I1" false)
         I2 (create-port "I2" false)
-        E1 (create-port "E1" true [:x ])
+        E1 (create-port "E1" true {:x :x})
         E2 (create-port "E2" true)
         t1 (create-transition "t1" start end I1 0 true
-                                   (fn t-action
-                                     [c]
-                                     (do
-                                       (set-variable
-                                         c
-                                         :x (+ 1
-                                              (get-variable c :x ))))))
+                                   "x=x+1;")
         t2 (create-transition "t2" start end E1 1)
         t3 (create-transition "t3" end start I2 0)
         C1 (create-atomic

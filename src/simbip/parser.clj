@@ -23,12 +23,13 @@
   (clojure.string/join
     (remove is-whitespace? expression-string)))
 
-(defn single-statements
+(defn to-single-statements
   [expression-string]
   "Split a BIP action string seperated by ';' (a=1;b=2;c=a+b;) into a list of single statements."
   (remove clojure.string/blank?
     (clojure.string/split
       expression-string #";")))
+
 
 (defn tokenize
   [statement]
@@ -56,13 +57,14 @@
           (= ch \*)
           (= ch \/)
           (= ch \%)
-          (= ch \^))
+          (= ch \^)
+          (= ch \.))
         (cons {:name (str ch) :type "OP"}
           (tokenize left))
 
       ;; variable
         (is-alpha? ch)
-        (let [var-name (re-find #"\w+" statement)
+        (let [var-name (re-find #"[a-zA-Z]+" statement)
               left (clojure.string/replace-first
                      statement
                      var-name
@@ -103,6 +105,7 @@
   [op-name]
   ;; Reference: http://en.cppreference.com/w/cpp/language/operator_precedence
   (case op-name
+    (".") 1
     ("!") 2
     ("*", "/", "%") 4
     ("+", "-") 5
@@ -228,6 +231,13 @@
   [tokens]
   (build-AST-rec '() '() tokens))
 
+(defn build-ASTs-from-string
+  [statements-string]
+  (map
+    (comp build-AST tokenize)
+    (to-single-statements
+      (remove-whitespace statements-string))))
+
 (defn set-environment
   [atomic-map]
   (fn [action]
@@ -239,9 +249,15 @@
       (fn [bind-name value]
         (swap! atomic-map assoc bind-name value)))))
 
+(defn merge-environment
+  [atomic-map extern-map]
+  (swap! atomic-map into extern-map))
+
 (defn operator-table
   [op-name]
   (case op-name
+    "." (fn [keyword1 keyword2]
+          (str (name keyword1) "-" (name keyword2)))
     "!" not
     "*" *
     "/" /
@@ -287,6 +303,13 @@
               (fn [t1 t2]
                 {:value
                  (apply op [(:value t1) (:value t2)])})}
+            (".")
+            { :operate
+              (fn [t1 t2]
+                (let [ complete-name (keyword (op (:name t1) (:name t2)))
+                       complete-value (getter complete-name)]
+                  { :name complete-name
+                    :value complete-value}))}
             ;;
             ("=")
             { :operate
@@ -317,13 +340,36 @@
           (:operate tr-root)
           (map #(build-exec trans %) leafs))))))
 
+(defn build-exec-list
+  [trans ast-list]
+  (doseq [ast ast-list]
+    (build-exec trans ast)))
 
-(tokenize "(a+b+c)")
-(build-AST (tokenize "e==(a+(b+(c*d)))"))
+(defn environment-synchronize
+  [env1-map env2-map key-map]
+  "for key :k in key-map, merge {(:k key-map) (:k env1-map)} into env2-map"
+  (merge-environment
+    env2-map
+    (reduce
+      into
+      {}
+      (map
+        (fn [k]
+          {(get key-map k) (get (deref env1-map) k)})
+        (keys key-map)))))
+
+
+#_(tokenize "(a+b+c)")
+#_(build-AST (tokenize "e==(a+(b+(c*d)))"))
 (do
   (def env1 (atom {}))
   (def env (set-environment env1))
   (def tr (get-trans-interface env))
-  (def ast (build-AST (tokenize "7==(a=7)")))
-  (def tt (build-exec tr ast)))
-(build-AST (tokenize "a=5"))
+  (def ast-list  (build-ASTs-from-string "a.x=1;a.y=2; p.x=a.x;p.y=2*a.y;"))
+  (def tt (build-exec-list tr ast-list)))
+#_(build-AST (tokenize "a=5"))
+
+(def env1-map (atom {:a 1 :b 2}))
+(def env2-map (atom {:x 2 :y 4}))
+(environment-synchronize env1-map env2-map {:a :x :b :y})
+
