@@ -64,7 +64,7 @@
 
       ;; variable
         (is-alpha? ch)
-        (let [var-name (re-find #"[a-zA-Z]+" statement)
+        (let [var-name (re-find #"\w+" statement)
               left (clojure.string/replace-first
                      statement
                      var-name
@@ -346,8 +346,8 @@
     (build-exec trans ast)))
 
 (defn environment-synchronize
-  [env1-map env2-map key-map]
-  "for key :k in key-map, merge {(:k key-map) (:k env1-map)} into env2-map"
+  [val-map env2-map key-map]
+  "for key :k in key-map, merge {(:k key-map) (:k val-map)} into env2-map"
   (merge-environment
     env2-map
     (reduce
@@ -355,7 +355,7 @@
       {}
       (map
         (fn [k]
-          {(get key-map k) (get (deref env1-map) k)})
+          {(get key-map k) (get val-map k)})
         (keys key-map)))))
 
 
@@ -366,10 +366,11 @@
   (def env (set-environment env1))
   (def tr (get-trans-interface env))
   (def ast-list  (build-ASTs-from-string "a.x=1;a.y=2; p.x=a.x;p.y=2*a.y;"))
+  (def ast  (build-ASTs-from-string "dev.x=dev.x+ctrl.x;"))
   (def tt (build-exec-list tr ast-list)))
 #_(build-AST (tokenize "a=5"))
 
-(def env1-map (atom {:a 1 :b 2}))
+(def env1-map {:a 1 :b 2})
 (def env2-map (atom {:x 2 :y 4}))
 (environment-synchronize env1-map env2-map {:a :x :b :y})
 

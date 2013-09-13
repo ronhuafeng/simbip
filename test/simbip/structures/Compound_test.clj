@@ -129,7 +129,7 @@
 
 
 (deftest all-in-one-test3-with-vars
-  (let [P1 (create-port "P1" true {:x :x})
+  (let [P1 (create-port "P1" true {:x :p1-x})
         Q1 (create-port "Q1" false)
         start1 (create-place "start1")
         end1 (create-place "end1")
@@ -144,7 +144,7 @@
              0
              {:x 1 :y 1})
 
-        P2 (create-port "P2" true {:x :x})
+        P2 (create-port "P2" true {:x :p2-x})
         Q2 (create-port "Q2" false)
         start2 (create-place "start2")
         end2 (create-place "end2")
@@ -166,26 +166,11 @@
              [{:component c1 :port P1}
               {:component c2 :port P2}]
              2
-             (fn action!
-               [I direction]
-               (cond
-                 (= direction 'up)
-                 (create-token
-                   {:x1 (get-variable I 0 :x )
-                    :x2 (get-variable I 1 :x )}
-                   (get-time I))
-
-                 (= direction 'down)
-                 (fn [token]
-                   ;; v is result of up-action
-                   (let [v (:value token)]
-                     {P1 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))
-                      P2 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))}))))
-             {})
+             {
+              :up-action    "x1=dev.x;x2=ctrl.x;"
+              :down-action  "dev.x=x1+x2;ctrl.x=x1+x2;"
+               }
+             {:p1-x :dev-x :p2-x :ctrl-x})
 
         EC (create-port "EC" true)
         c3 (create-compound
@@ -223,7 +208,7 @@
         (is (enable? c3 EC))))))
 
 (deftest all-in-one-test4-with-vars-hierarchy
-  (let [P1 (create-port "P1" true {:x :x})
+  (let [P1 (create-port "P1" true {:x :p1-x})
         Q1 (create-port "Q1" false)
         start1 (create-place "start1")
         end1 (create-place "end1")
@@ -238,7 +223,7 @@
              0
              {:x 2 :y 1})
 
-        P2 (create-port "P2" true {:x :x})
+        P2 (create-port "P2" true {:x :p2-x})
         Q2 (create-port "Q2" false)
         start2 (create-place "start2")
         end2 (create-place "end2")
@@ -253,41 +238,26 @@
              0
              {:x 2 :y 2})
 
-        EI (create-port "EI" true {:x1 :x1})
+        EI (create-port "EI" true {:x1 :ei-x1})
         I1 (create-interaction
              "I1"
              EI
              [{:component c1 :port P1}
               {:component c2 :port P2}]
              2
-             (fn action!
-               [I direction]
-               (cond
-                 (= direction 'up)
-                 (create-token
-                   {:x1 (get-variable I 0 :x )
-                    :x2 (get-variable I 1 :x )}
-                   (get-time I))
+             {
+              :up-action   "x1=dev.x;x2=ctrl.x;"
+              :down-action "dev.x=x1+x1;ctrl.x=x1+x2;"
+               }
+             {:p1-x :dev-x :p2-x :ctrl-x})
 
-                 (= direction 'down)
-                 (fn [token]
-                   ;; v is result of up-action
-                   (let [v (:value token)]
-                     {P1 (create-token
-                           {:x (+ (:x1 v) (:x1 v))}
-                           (:time token))
-                      P2 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))}))))
-             {})
-
-        EC (create-port "EC" true {:x1 :x1})
+        EC (create-port "EC" true {:ei-x1 :ec-x1})
         c3 (create-compound
              "c3"
              [c1 c2 I1]
              [{:target EC :source EI :source-component I1}])
 
-        P4 (create-port "P4" true {:x :x})
+        P4 (create-port "P4" true {:x :p4-x})
         state (create-place "state")
         tloop (create-transition "tloop" state state P4 1)
         c4 (create-atomic
@@ -305,26 +275,11 @@
              [{:component c3 :port EC}
               {:component c4 :port P4}]
              2
-             (fn action!
-               [I direction]
-               (cond
-                 (= direction 'up)
-                 (create-token
-                   {:x1 (get-variable I 0 :x1 )
-                    :x (get-variable I 1 :x )}
-                   (get-time I))
-
-                 (= direction 'down)
-                 (fn [token]
-                   ;; v is result of up-action
-                   (let [v (:value token)]
-                     {EC (create-token
-                           {:x1 (- (:x1 v) 1)}
-                           (:time token))
-                      P4 (create-token
-                           {:x (+ (:x1 v) 1)}
-                           (:time token))}))))
-             {})]
+             {
+              :up-action   "x1=dev.x1;x=ctrl.x;"
+              :down-action "dev.x1 = x1+1;ctrl.x=x1+1;"
+               }
+             {:ec-x1 :dev-x1 :p4-x :ctrl-x})]
     (testing "all-in-one test 2 of Compount"
       (do
         (is (not (enable? c1)))
@@ -334,26 +289,12 @@
         (is (enable? c3 EC))
         (is (= (get-export c3 EC)
               {:source EI :source-component I1 :target EC}))
-        (is (= [{:time 0 :value {:x1 2}}] (retrieve-port I1 EI)))
-        (is (= [{:time 0 :value {:x1 2}}] (retrieve-port c3 EC))))
+        (is (= [{:time 0 :value {:ei-x1 2}}] (retrieve-port I1 EI)))
+        (is (= [{:time 0 :value {:ec-x1 2}}] (retrieve-port c3 EC))))
 
       (do
-        (is (= ((:action! I2) I2 'up)
-              (create-token
-                {:x1 2 :x 1}
-                0)))
-        (is (= (((:action! I2) I2 'down)
-                (create-token
-                  {:x1 2 :x 1}
-                  0))
-              {EC (create-token
-                    {:x1 1}
-                    0)
-               P4 (create-token
-                    {:x 3}
-                    0)}))
         (fire! I2)
 
-        (is (= 2 (get-variable c1 :x )))
-        (is (= 3 (get-variable c2 :x )))
+        (is (= 6 (get-variable c1 :x )))
+        (is (= 5 (get-variable c2 :x )))
         (is (= 3 (get-variable c4 :x )))))))

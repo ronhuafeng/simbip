@@ -4,7 +4,7 @@
   (:require [clojure.test :refer :all ]))
 
 
-(deftest all-in-one-test
+#_(deftest all-in-one-test
   (let [start (create-place "start")
         end (create-place "end")
 
@@ -106,7 +106,7 @@
 
         I1 (create-port "I1" false)
         I2 (create-port "I2" false)
-        E1 (create-port "E1" true {:x :x})
+        E1 (create-port "E1" true {:x :e1-x})
 
         t1 (create-transition "t1" start end I1)
         t2 (create-transition "t2" start end E1)
@@ -124,7 +124,7 @@
         idle (create-place "idle")
         run (create-place "run")
 
-        R1 (create-port "R1" true {:x :x})
+        R1 (create-port "R1" true {:x :r1-x})
         R2 (create-port "R2" false)
 
         t4 (create-transition "t4" idle run R1)
@@ -139,65 +139,35 @@
              0
              {:x 2})
         ;;------------------------------------;;
-        PG (create-port "PG" true {:x1 :x1})
+        PG (create-port "PG" true {:xx :pg-xx})
         G1 (create-interaction
              "G1"
              nil
              [{:component C1 :port E1}
               {:component C2 :port R1}]
              1
-             (fn action!
-               [I direction]
-               (cond
-                 (= direction 'up)
-                 (create-token
-                   {:x1 (get-variable I 0 :x )
-                    :x2 (get-variable I 1 :x )}
-                   (get-time I))
-
-                 (= direction 'down)
-                 (fn [token]
-                   ;; v is result of up-action
-                   (let [v (:value token)]
-                     {E1 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))
-                      R1 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))}))))
-             {})
+             {
+              :up-action   ""
+              :down-action "dev.x=dev.x+ctrl.x;"
+               }
+             {:e1-x :dev-x :r1-x :ctrl-x})
         G2 (create-interaction
              "G2"
              PG
              [{:component C1 :port E1}
               {:component C2 :port R1}]
              1
-             (fn action!
-               [I direction]
-               (cond
-                 (= direction 'up)
-                 (create-token
-                   {:x1 (get-variable I 0 :x )
-                    :x2 (get-variable I 1 :x )}
-                   (get-time I))
-
-                 (= direction 'down)
-                 (fn [token]
-                   ;; v is result of up-action
-                   (let [v (:value token)]
-                     {E1 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))
-                      R1 (create-token
-                           {:x (+ (:x1 v) (:x2 v))}
-                           (:time token))}))))
-             {})]
+             {
+              :up-action "xx=dev.x;"
+              :down-action ""
+               }
+             {:e1-x :dev-x :r1-x :ctrl-x})]
     (testing "all-in-one testing of Interaction with vars."
       (is (enable? C1 E1))
       (is (enable? C2 R1))
       (is (enable? G1))
       (is (enable? G2 PG))
-      (is (= [{:time 0 :value {:x 2}}] (retrieve-port C2 R1)))
+      (is (= [{:time 0 :value {:r1-x 2}}] (retrieve-port C2 R1)))
 
       (do
         (assign-port! C1 E1
@@ -229,31 +199,12 @@
         (is (= 1 (get-variable C1 :x )))
         (is (= 2 (get-variable C2 :x )))
 
-        (is (= [{:value {:x 1} :time 0}]
+        (is (= [{:value {:e1-x 1} :time 0}]
               (retrieve-port C1 E1)))
-        (is (= [{:value {:x 2} :time 0}]
+        (is (= [{:value {:r1-x 2} :time 0}]
               (retrieve-port C2 R1)))
 
-        (is (= ((:action! G1) G1 'up)
-              (create-token
-                {:x1 1 :x2 2}
-                0)))
-        (is (= (((:action! G1) G1 'down)
-                (create-token
-                  {:x1 1 :x2 2}
-                  0))
-              {E1 (create-token
-                    {:x 3}
-                    0)
-               R1 (create-token
-                    {:x 3}
-                    0)}))
-        (is (= (get (((:action! G1) G1 'down)
-                     {:value {:x1 1 :x2 2} :time 0})
-                 E1)
-              (create-token
-                {:x 3}
-                0)))
+        (is (= true (enable? G1)))
         (fire! G1)
         (is (= 3 (get-variable C1 :x )))
         (is (enable? C1))
@@ -271,13 +222,10 @@
         (fire! C2)
         (is (enable? G1))
         (is (enable? G2 PG))
-        (is (= ((:action! G2) G2 'up)
-              (create-token
-                {:x1 1 :x2 2}
-                0)))
+
         (is (=
               [(create-token
-                 {:x1 1}
+                 {:pg-xx 1}
                  0)]
               (retrieve-port G2 PG))))
 

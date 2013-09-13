@@ -92,7 +92,7 @@
         end (create-place "end")
         I1 (create-port "I1" false)
         I2 (create-port "I2" false)
-        E1 (create-port "E1" true {:x :x})
+        E1 (create-port "E1" true {:x :ctrl})
         E2 (create-port "E2" true)
         t1 (create-transition "t1" start end I1 0 true
                                    "x=x+1;")
@@ -117,12 +117,15 @@
       (do
         (is (not= [] (retrieve-port C1 E1)))
         (is (= [] (retrieve-port I2)))
-        (is (= [{:value {:x 1} :time 0}] (retrieve-port E1)))
+        (is (= [{:value {:ctrl 1} :time 0}] (retrieve-port E1)))
         (is (= [] (retrieve-port C1 E2))))
       (do
         (is (= 1 (get-variable C1 :x )))
         (is (= 2 (get-variable C1 :y )))
-        (is (= {:x 1} (project-value E1 (deref (:variables C1)))))
+        (is (= {:x 1} (project-value
+                        (deref (:variables C1))
+                        (keys (:var-list E1)))))
+
         (set-variable C1 :y 3)
         (is (= 3 (get-variable C1 :y )))
         )
@@ -164,6 +167,6 @@
           (is (= 1 (get-time C1)))
 
           (fire! C1)
-          (assign-port! C1 E1 {:value {:x 3} :time 2})
+          (assign-port! C1 E1 {:value {:ctrl 3} :time 2})
           (is (= 3 (get-time C1)))
           (is (= 3 (get-variable C1 :x ))))))))
