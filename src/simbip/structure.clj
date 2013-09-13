@@ -454,9 +454,10 @@
           environment (set-environment var-map)
           up-action (build-ASTs-from-string (:up-action action-string-map))
           down-action (build-ASTs-from-string (:down-action action-string-map))
-          ;; _ (println up-action)
-          ;; _ (println "up-action: " (:up-action action-string-map))
-          ;; _ (println down-action)
+          _ (println up-action)
+          _ (println "up-action: " (:up-action action-string-map))
+          _ (println down-action)
+          _ (println "down-action: " (:down-action action-string-map))
           ]
       (->Interaction 'Interaction
         name

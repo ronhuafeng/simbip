@@ -301,8 +301,10 @@
               "&&", "||")
             { :operate
               (fn [t1 t2]
-                {:value
-                 (apply op [(:value t1) (:value t2)])})}
+                (do
+                  (println v " applys to " t1 t2 )
+                  {:value
+                   (apply op [(:value t1) (:value t2)])}))}
             (".")
             { :operate
               (fn [t1 t2]
