@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6060e859-f699-412e-af20-a6b730169579" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/simbip/structures/Atomic_test.clj" afterPath="$PROJECT_DIR$/test/simbip/structures/Atomic_test.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/simbip/structures/Compound_test.clj" afterPath="$PROJECT_DIR$/test/simbip/structures/Compound_test.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/simbip/structures/Interaction_test.clj" afterPath="$PROJECT_DIR$/test/simbip/structures/Interaction_test.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/simbip/core_test.clj" afterPath="$PROJECT_DIR$/test/simbip/core_test.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/parser.clj" afterPath="$PROJECT_DIR$/src/simbip/parser.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/structure.clj" afterPath="$PROJECT_DIR$/src/simbip/structure.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simbip.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6060e859-f699-412e-af20-a6b730169579" time="1378970046438" ignored="false" />
+    <file path="/Dummy.txt" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379030996768" ignored="false" />
     <file path="$PROJECT_DIR$/../BIP-semantics/src/semantics_interpreter/structures/Compound.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377700726750" ignored="false" />
     <file path="/structure.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379005930903" ignored="false" />
     <file path="/protocol.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377702284308" ignored="false" />
@@ -600,7 +594,11 @@
       <created>1378970088987</created>
       <updated>1378970088987</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="已经基本完成了功能，正在朝着修改接口和集成的路上前进，单元测试也基本完成了。">
+      <created>1379031030782</created>
+      <updated>1379031030782</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -697,7 +695,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="正在朝支持port类型声明和connector类型声明的路上前进，现还没有改错什么东西。&#10;&#10;尚未完成：&#10;1.interaction的变量名称修改添加&#10;2.导出的类库接口修改&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="已经基本完成了功能，正在朝着修改接口和集成的路上前进，单元测试也基本完成了。" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -713,6 +711,7 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="完成了 parse action 的基本功能&#10;&#10;尚未完成：&#10;1. 修改 structure 代码，启用新的 action 使用方式&#10;2. 修改单元测试，以适配新的代码" />
     <MESSAGE value="正在朝支持port类型声明和connector类型声明的路上前进，现还没有改错什么东西。&#10;&#10;尚未完成：&#10;1.interaction的变量名称修改添加&#10;2.导出的类库接口修改&#10;" />
+    <MESSAGE value="已经基本完成了功能，正在朝着修改接口和集成的路上前进，单元测试也基本完成了。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
