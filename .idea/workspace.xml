@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6060e859-f699-412e-af20-a6b730169579" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/constructor.clj" afterPath="$PROJECT_DIR$/src/simbip/constructor.clj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/structure.clj" afterPath="$PROJECT_DIR$/src/simbip/structure.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simbip.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379030996768" ignored="false" />
+    <file path="/Dummy.txt" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379031043479" ignored="false" />
     <file path="$PROJECT_DIR$/../BIP-semantics/src/semantics_interpreter/structures/Compound.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377700726750" ignored="false" />
     <file path="/structure.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379005930903" ignored="false" />
     <file path="/protocol.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377702284308" ignored="false" />
@@ -17,7 +19,7 @@
     <file path="/Port_test.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377702690947" ignored="false" />
     <file path="/Transition_test.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377702710895" ignored="false" />
     <file path="/project.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377702941524" ignored="false" />
-    <file path="/constructor.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1378286467393" ignored="false" />
+    <file path="/constructor.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379032320118" ignored="false" />
     <file path="/Clojure REPL" changelist="6060e859-f699-412e-af20-a6b730169579" time="1378999843169" ignored="false" />
     <file path="/parser.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379003806101" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -80,10 +82,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="structure.clj" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="structure.clj" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="738" column="56" selection-start="16512" selection-end="16512" vertical-scroll-proportion="0.11966988">
+            <state line="210" column="14" selection-start="3554" selection-end="3565" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="constructor.clj" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="58" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.33012378">
               <folding />
             </state>
           </provider>
@@ -157,13 +168,13 @@
         <option value="$PROJECT_DIR$/test/simbip/structures/Port_test.clj" />
         <option value="$PROJECT_DIR$/test/simbip/structures/Transition_test.clj" />
         <option value="$PROJECT_DIR$/project.clj" />
-        <option value="$PROJECT_DIR$/src/simbip/constructor.clj" />
         <option value="$PROJECT_DIR$/test/simbip/structures/Atomic_test.clj" />
         <option value="$PROJECT_DIR$/test/simbip/core_test.clj" />
         <option value="$PROJECT_DIR$/test/simbip/structures/Compound_test.clj" />
         <option value="$PROJECT_DIR$/src/simbip/parser.clj" />
         <option value="$PROJECT_DIR$/test/simbip/structures/Interaction_test.clj" />
         <option value="$PROJECT_DIR$/src/simbip/structure.clj" />
+        <option value="$PROJECT_DIR$/src/simbip/constructor.clj" />
       </list>
     </option>
   </component>
@@ -598,7 +609,11 @@
       <created>1379031030782</created>
       <updated>1379031030782</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="已经基本完成了功能，正在朝着修改接口和集成的路上前进，单元测试也基本完成了。">
+      <created>1379031049440</created>
+      <updated>1379031049440</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -738,11 +753,6 @@
         <state line="0" column="27" selection-start="27" selection-end="27" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="30" selection-start="4154" selection-end="4154" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simbip.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -818,7 +828,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="738" column="56" selection-start="16512" selection-end="16512" vertical-scroll-proportion="0.11966988">
+        <state line="210" column="14" selection-start="3554" selection-end="3565" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="58" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.33012378">
           <folding />
         </state>
       </provider>

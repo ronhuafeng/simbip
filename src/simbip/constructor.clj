@@ -10,36 +10,70 @@
                        simbip.structure.Port]
              ^:static [createTransition [String simbip.structure.Place simbip.structure.Place simbip.structure.Port]
                        simbip.structure.Transition]
-             ^:static [createTransition [String simbip.structure.Place simbip.structure.Place simbip.structure.Port
+             ^:static [createTransition [String
+                                         simbip.structure.Place
+                                         simbip.structure.Place
+                                         simbip.structure.Port
                                          Integer]
                        simbip.structure.Transition]
-             ^:static [createTransition [String simbip.structure.Place simbip.structure.Place simbip.structure.Port
-                                         Integer clojure.lang.IFn clojure.lang.IFn]
+             ^:static [createTransition [String
+                                         simbip.structure.Place
+                                         simbip.structure.Place
+                                         simbip.structure.Port
+                                         Integer
+                                         String
+                                         String]
                        simbip.structure.Transition]
-             ^:static [createAtomic [String clojure.lang.PersistentVector clojure.lang.PersistentVector
-                                     simbip.structure.Place clojure.lang.PersistentVector Integer]
+             ^:static [createAtomic [String
+                                     clojure.lang.PersistentVector
+                                     clojure.lang.PersistentVector
+                                     simbip.structure.Place
+                                     clojure.lang.PersistentVector
+                                     Integer]
                        simbip.structure.Atomic]
-             ^:static [createAtomic [String clojure.lang.PersistentVector clojure.lang.PersistentVector
-                                     simbip.structure.Place clojure.lang.PersistentVector Integer
+             ^:static [createAtomic [String
+                                     clojure.lang.PersistentVector
+                                     clojure.lang.PersistentVector
+                                     simbip.structure.Place
+                                     clojure.lang.PersistentVector
+                                     Integer
                                      clojure.lang.PersistentArrayMap]
                        simbip.structure.Atomic]
-             ^:static [createInteraction [String simbip.structure.Port clojure.lang.PersistentVector Integer]
+             ^:static [createInteraction [String
+                                          simbip.structure.Port
+                                          clojure.lang.PersistentVector
+                                          Integer]
                        simbip.structure.Interaction]
-             ^:static [createInteraction [String simbip.structure.Port clojure.lang.PersistentVector Integer
-                                          clojure.lang.IFn]
+             ^:static [createInteraction [String
+                                          simbip.structure.Port
+                                          clojure.lang.PersistentVector
+                                          Integer
+                                          clojure.lang.PersistentArrayMap  ;; action-string-map
+                                          clojure.lang.PersistentArrayMap  ;; var-list map
+                                          ]
                        simbip.structure.Interaction]
-             ^:static [createCompound [String clojure.lang.PersistentVector clojure.lang.PersistentVector]
+             ^:static [createCompound [String
+                                       clojure.lang.PersistentVector
+                                       clojure.lang.PersistentVector]
                        simbip.structure.Compound]
              ^:static [fire [simbip.structure.Compound] void]
-             ^:static [createExport [simbip.structure.Port simbip.structure.Port simbip.structure.Atomic]
+             ^:static [createExport [simbip.structure.Port
+                                     simbip.structure.Port
+                                     simbip.structure.Atomic]
                        clojure.lang.PersistentArrayMap]
-             ^:static [createExport [simbip.structure.Port simbip.structure.Port simbip.structure.Compound]
+             ^:static [createExport [simbip.structure.Port
+                                     simbip.structure.Port
+                                     simbip.structure.Compound]
                        clojure.lang.PersistentArrayMap]
-             ^:static [createExport [simbip.structure.Port simbip.structure.Port simbip.structure.Interaction]
+             ^:static [createExport [simbip.structure.Port
+                                     simbip.structure.Port
+                                     simbip.structure.Interaction]
                        clojure.lang.PersistentArrayMap]
-             ^:static [createConnection [simbip.structure.Atomic simbip.structure.Port]
+             ^:static [createConnection [simbip.structure.Atomic
+                                         simbip.structure.Port]
                        clojure.lang.PersistentArrayMap]
-             ^:static [createConnection [simbip.structure.Compound simbip.structure.Port]
+             ^:static [createConnection [simbip.structure.Compound
+                                         simbip.structure.Port]
                        clojure.lang.PersistentArrayMap]
              ^:static [allSubComponents [simbip.structure.Compound]
                        clojure.lang.PersistentVector]
@@ -93,8 +127,8 @@
 (defn -createInteraction
   ([name port connections time]
    (create-interaction name port connections time))
-  ([name port connections time action]
-   (create-interaction name port connections time action)))
+  ([name port connections time action-string-map var-list]
+   (create-interaction name port connections time action-string-map)))
 
 
 (defn -createCompound

@@ -160,7 +160,7 @@
      port
      0
      "" ;; guard
-     '() ;; action
+     "" ;; action
      ))
   ([name source target port time]
    (->Transition 'Transition
@@ -170,7 +170,7 @@
      port
      time
      "" ;; guard
-     '() ;; action
+     "" ;; action
      ))
   ([name source target port time guard? action-string]
     (let [action! (build-ASTs-from-string action-string)]
