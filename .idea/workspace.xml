@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6060e859-f699-412e-af20-a6b730169579" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/constructor.clj" afterPath="$PROJECT_DIR$/src/simbip/constructor.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/structure.clj" afterPath="$PROJECT_DIR$/src/simbip/structure.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simbip.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379031043479" ignored="false" />
+    <file path="/Dummy.txt" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379032969163" ignored="false" />
     <file path="$PROJECT_DIR$/../BIP-semantics/src/semantics_interpreter/structures/Compound.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377700726750" ignored="false" />
     <file path="/structure.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1379005930903" ignored="false" />
     <file path="/protocol.clj" changelist="6060e859-f699-412e-af20-a6b730169579" time="1377702284308" ignored="false" />
@@ -94,7 +92,7 @@
       <file leaf-file-name="constructor.clj" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="58" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.33012378">
+            <state line="26" column="44" selection-start="1579" selection-end="1579" vertical-scroll-proportion="-0.96286106">
               <folding />
             </state>
           </provider>
@@ -613,7 +611,11 @@
       <created>1379031049440</created>
       <updated>1379031049440</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="修改了接口">
+      <created>1379032981723</created>
+      <updated>1379032981724</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -638,7 +640,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299389" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -660,8 +662,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12540022" sideWeight="0.7688391" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2311609" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12540022" sideWeight="0.7688391" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2311609" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -710,7 +712,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="已经基本完成了功能，正在朝着修改接口和集成的路上前进，单元测试也基本完成了。" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改了接口" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -727,6 +729,7 @@
     <MESSAGE value="完成了 parse action 的基本功能&#10;&#10;尚未完成：&#10;1. 修改 structure 代码，启用新的 action 使用方式&#10;2. 修改单元测试，以适配新的代码" />
     <MESSAGE value="正在朝支持port类型声明和connector类型声明的路上前进，现还没有改错什么东西。&#10;&#10;尚未完成：&#10;1.interaction的变量名称修改添加&#10;2.导出的类库接口修改&#10;" />
     <MESSAGE value="已经基本完成了功能，正在朝着修改接口和集成的路上前进，单元测试也基本完成了。" />
+    <MESSAGE value="修改了接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -835,7 +838,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="58" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.33012378">
+        <state line="26" column="44" selection-start="1579" selection-end="1579" vertical-scroll-proportion="-0.96286106">
           <folding />
         </state>
       </provider>
