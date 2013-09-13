@@ -5,8 +5,8 @@
    :methods [^:static [createToken [clojure.lang.PersistentArrayMap Integer] clojure.lang.PersistentArrayMap]
              ^:static [createPlace [String] simbip.structure.Place]
              ^:static [createPort [String Boolean] simbip.structure.Port]
-             ^:static [createPort [String Boolean clojure.lang.PersistentVector] simbip.structure.Port]
-             ^:static [createPort [String Boolean clojure.lang.PersistentVector clojure.lang.Symbol]
+             ^:static [createPort [String Boolean clojure.lang.PersistentArrayMap] simbip.structure.Port]
+             ^:static [createPort [String Boolean clojure.lang.PersistentArrayMap clojure.lang.Symbol]
                        simbip.structure.Port]
              ^:static [createTransition [String simbip.structure.Place simbip.structure.Place simbip.structure.Port]
                        simbip.structure.Transition]
@@ -128,7 +128,7 @@
   ([name port connections time]
    (create-interaction name port connections time))
   ([name port connections time action-string-map var-list]
-   (create-interaction name port connections time action-string-map)))
+   (create-interaction name port connections time action-string-map var-list)))
 
 
 (defn -createCompound
