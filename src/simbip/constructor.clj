@@ -80,7 +80,9 @@
              ^:static [allSubComponents [simbip.structure.Atomic]
                        clojure.lang.PersistentVector]
              ^:static [currentPlace [simbip.structure.Atomic]
-                       simbip.structure.Place]]))
+                       simbip.structure.Place]
+             ^:static [getVariableStrings [simbip.structure.Atomic]
+                       clojure.lang.LazySeq]]))
 
 (defn -createToken
   [value time]
@@ -150,3 +152,11 @@
 (defn -currentPlace
   [component]
   (current-place component))
+(defn -getVariableStrings
+  [component]
+  (if (contains? component :variables)
+    (let [varList (deref (:variables component))]
+      (map
+        #(str (:name component) "." (name %) " = " (get varList %))
+        (keys varList)))
+    []))
