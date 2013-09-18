@@ -343,9 +343,13 @@
           (map #(build-exec trans %) leafs))))))
 
 (defn build-exec-list
+  ;; assume ast-list has at least one element
   [trans ast-list]
-  (doseq [ast ast-list]
-    (build-exec trans ast)))
+  (let [result (build-exec trans (first ast-list))]
+    (if (= '() (rest ast-list))
+      result
+      (build-exec-list trans (rest ast-list))))
+  )
 
 (defn environment-synchronize
   [val-map env2-map key-map]
@@ -360,6 +364,13 @@
           {(get key-map k) (get val-map k)})
         (keys key-map)))))
 
+(defn compute-action!
+  [ast-list env]
+  (if (empty? ast-list)
+    true
+    (build-exec-list
+      (get-trans-interface env)
+      ast-list)))
 
 #_(tokenize "(a+b+c)")
 #_(build-AST (tokenize "e==(a+(b+(c*d)))"))
@@ -367,9 +378,24 @@
   (def env1 (atom {}))
   (def env (set-environment env1))
   (def tr (get-trans-interface env))
-  (def ast-list  (build-ASTs-from-string "a.x=1;a.y=2; p.x=a.x;p.y=2*a.y;"))
-  (def ast  (build-ASTs-from-string "dev.x=dev.x+ctrl.x;"))
-  (def tt (build-exec-list tr ast-list)))
+  (def ast-list  (build-ASTs-from-string "1==1;a=2; b=3; c=4; a+b>c;"))
+
+
+
+  (def tt (build-exec-list tr ast-list))
+  (def ast  (build-AST (tokenize "a+b>c")))
+
+  (def rs (build-exec tr ast)))
+
+
+
+(do
+  (def ast  (build-AST (tokenize "1==1")))
+  (def env1 (atom {}))
+  (def env (set-environment env1))
+  (def tr (get-trans-interface env))
+
+  (def result (build-exec tr ast)))
 #_(build-AST (tokenize "a=5"))
 
 (def env1-map {:a 1 :b 2})
