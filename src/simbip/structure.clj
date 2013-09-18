@@ -437,27 +437,32 @@
     (let [var-map (atom {})
           environment (set-environment var-map)
           up-action (build-ASTs-from-string "")
-          down-action (build-ASTs-from-string "")]
+          down-action (build-ASTs-from-string "")
+          guard-action (build-ASTs-from-string "true")]
       (->Interaction 'Interaction
         name
         port
         connections
         time
         { :up-action up-action
-          :down-action down-action}
+          :down-action down-action
+          :guard-action guard-action}
         var-map
         environment
         {} ;; var list
         )))
   ([name port connections time action-string-map var-list]
-    (let [var-map (atom {})
-          environment (set-environment var-map)
-          up-action (build-ASTs-from-string (:up-action action-string-map))
-          down-action (build-ASTs-from-string (:down-action action-string-map))
-          _ (println up-action)
-          _ (println "up-action: " (:up-action action-string-map))
-          _ (println down-action)
-          _ (println "down-action: " (:down-action action-string-map))
+    (let [ var-map (atom {})
+           environment (set-environment var-map)
+           up-action (build-ASTs-from-string (:up-action action-string-map))
+           down-action (build-ASTs-from-string (:down-action action-string-map))
+           guard-action (build-ASTs-from-string (:guard-action action-string-map))
+           _ (println up-action)
+           _ (println "up-action: " (:up-action action-string-map))
+           _ (println down-action)
+           _ (println "down-action: " (:down-action action-string-map))
+           _ (println down-action)
+           _ (println "guard-action: " (:guard-action action-string-map))
           ]
       (->Interaction 'Interaction
         name
@@ -465,14 +470,15 @@
         connections
         time
         { :up-action up-action
-          :down-action down-action}
+          :down-action down-action
+          :guard-action guard-action}
         var-map
         environment
         var-list
         ))))
 
 
-
+;; 是否 interaction 连接的所有 port 都是激活的
 (defn- all-enable?
   [connections]
   (apply
@@ -482,71 +488,80 @@
                     (:port c))))
     connections))
 
+;; 把每个 port 中token中的变量都合并一个 map 中，用来进行后续计算
+(defn get-ports-map
+  [interaction]
+  (apply merge
+    (map (fn [conn]
+           (:value (first (retrieve-port
+                            (:component conn)
+                            (:port conn)))))
+      (:connections interaction))))
+(defn- extract-ports-to-env!
+  [interaction]
+  (do
+    ;; 重置环境
+    (reset! (:variables interaction) {})
+
+    ;; 把 port 中收集上来的变量的值换个名字放到 Interaction 的变量中
+    (environment-synchronize
+      (get-ports-map interaction)
+      (:variables interaction)
+      (:var-list interaction))))
+
+(defn- do-up-action!
+  [interaction]
+  (do
+    (extract-ports-to-env! interaction)
+
+    ;; 按照 Interaction 的 UP action 进行动作
+    (compute-action!
+      (:up-action (:action interaction))
+      (:environment interaction))))
+
+(defn- do-down-action!
+  [interaction time]
+  ;; 给每个 connection 中的 port 和 component 构造一个 正确的 token，然后通过 assign-port!
+  ;; 过程触发下面的 fire! 过程。
+  (let [ ports-env (atom {})
+         re-var-list (zipmap
+                       (vals (:var-list interaction))
+                       (keys (:var-list interaction)))]
+    (do
+      ;; 按照 Interaction 的 DOWN action 进行动作
+      (compute-action!
+        (:down-action (:action interaction))
+        (:environment interaction))
+
+      (environment-synchronize
+        (deref (:variables interaction))
+        ports-env
+        re-var-list)
+
+      (doseq [conn (:connections interaction)]
+        (assign-port!
+          (:component conn)
+          (:port conn)
+          ;; 最最关键的构造 token 的过程
+          {:time (+
+                   (:time interaction)
+                   time)
+           :value (project-value
+                    (deref ports-env)
+                    (vals (:var-list (:port conn))))})))))
+
 (defn- fire-interaction!
   [this token]
-  (let [ ports-env (atom {})
-         trans (get-trans-interface (:environment this))
-        ]
-    (do
+  (do
+    (do-up-action! this)
 
-      ;; 重置环境
-      (reset! (:variables this) {})
+    ;; Attention! 下面开始进行 Down Action 的动作
+    ;; 从一个token中提取值，合并到当前 interaction 的环境中
+    (merge-environment
+      (:variables this)
+      (:value token))
 
-      ;; 把每个 port 中token中的变量都合并到辅助环境中，用来进行后续计算
-      (doseq [conn (:connections this)]
-        (do
-          (merge-environment
-            ports-env
-            (:value (first (retrieve-port
-                             (:component conn)
-                             (:port conn)))))
-          ))
-
-
-      ;; 把 port 中收集上来的变量的值换个名字放到 Interaction 的变量中
-      (environment-synchronize
-        (deref ports-env)
-        (:variables this)
-        (:var-list this))
-
-      ;; 按照 Interaction 的 UP action 进行动作
-      (build-exec-list trans (:up-action (:action this)))
-
-
-
-      ;; 从一个token中提取值，合并到当前环境中
-      (merge-environment
-        (:variables this)
-        (:value token))
-
-      ;; 按照 Interaction 的 DOWN action 进行动作
-      (build-exec-list trans (:down-action (:action this)))
-
-
-      ;; 给每个 connection 中的 port 和 component 构造一个 正确的 token，然后通过 assign-port!
-      ;; 过程触发下面的 fire! 过程。
-
-      (let [re-var-list (zipmap
-                          (vals (:var-list this))
-                          (keys (:var-list this)))]
-        (do
-          (environment-synchronize
-            (deref (:variables this))
-            ports-env
-            re-var-list)
-          (doseq [conn (:connections this)]
-            (assign-port!
-              (:component conn)
-              (:port conn)
-              ;; 最最关键的构造 token 的过程
-              {:time (+
-                       (:time this)
-                       (:time token))
-               :value (project-value
-                        (deref ports-env)
-                        (vals (:var-list (:port conn))))}))))
-
-      )))
+    (do-down-action! this (:time token))))
 
 (extend-type Interaction
 
@@ -557,8 +572,12 @@
      (if (not (nil? (:port this)))
        false
        (if (all-enable? (:connections this))
-         true
-         false) #_ ("The guard part is ignored.")
+         (do
+           (extract-ports-to-env! this)
+           (compute-action!
+             (:guard-action (:action this))
+             (:environment this)))
+         false)
        ))
     ([this port]
      (if (or
@@ -566,8 +585,12 @@
            (not (export? port)))
        false
        (if (all-enable? (:connections this))
-         true
-         false) #_ ("The guard part is ignored.")
+         (do
+           (extract-ports-to-env! this)
+           (compute-action!
+             (:guard-action (:action this))
+             (:environment this)))
+         false)
        )))
 
   Accessible
@@ -591,34 +614,13 @@
     (if (all-enable? (:connections this))
       ;; only use the up-action result of the values of ports
       [(create-token
-         (let [ ports-env (atom {})
-                trans (get-trans-interface (:environment this))
-                ]
-           (do
-             (reset! (:variables this) {})
-             ;; 把每个 port 中token中的变量都合并到辅助环境中，用来进行后续计算
-             (doseq [conn (:connections this)]
-               (merge-environment
-                 ports-env
-                 (:value (first (retrieve-port
-                                  (:component conn)
-                                  (:port conn)))))
-               )
-
-             ;; 把 port 中收集上来的变量的值换个名字放到 Interaction 的变量中
-             (environment-synchronize
-               (deref ports-env)
-               (:variables this)
-               (:var-list this))
-
-
-             ;; 按照 Interaction 的 UP action 进行动作
-             (build-exec-list trans (:up-action (:action this)))
-             ;; 生成一个 token 中使用的 value 用于向上传递
-             (value-through-port
-               (deref (:variables this))
-               port)
-             ))
+         (do
+           (do-up-action! this)
+           ;; 生成一个 token 中使用的 value 用于向上传递
+           (value-through-port
+             (deref (:variables this))
+             port)
+           )
          (get-time this))]
       []))
   #_("assign-port! : Get a token from export, means the interaction is
