@@ -159,8 +159,8 @@
      target
      port
      0
-     "" ;; guard
-     "" ;; action
+     (build-ASTs-from-string "1==1") ;; guard
+     (build-ASTs-from-string "") ;; action
      ))
   ([name source target port time]
    (->Transition 'Transition
@@ -169,18 +169,19 @@
      target
      port
      time
-     "" ;; guard
-     "" ;; action
+     (build-ASTs-from-string "1==1") ;; guard
+     (build-ASTs-from-string "") ;; action
      ))
-  ([name source target port time guard? action-string]
-    (let [action! (build-ASTs-from-string action-string)]
+  ([name source target port time guard-string action-string]
+    (let [ action! (build-ASTs-from-string action-string)
+           guard? (build-ASTs-from-string guard-string)]
       (->Transition 'Transition
         name
         source
         target
         port
         time
-        "" ;; guard
+        guard? ;; guard
         action! ;; action
         ))))
 
@@ -227,13 +228,16 @@
 (defn- add-port-tokens
   [component]
   (doseq [t (current-transitions component)]
-    (add-token!
-      (:port t)
-      (create-token
-        (value-through-port
-          (deref (:variables component))
-          (:port t))
-        (get-time component)))))
+    (if (:value (compute-action!
+                  (:guard? t)
+                  (:environment component)))
+      (add-token!
+        (:port t)
+        (create-token
+          (value-through-port
+            (deref (:variables component))
+            (:port t))
+          (get-time component))))))
 (defn- clear-port-tokens
   [component]
   (doseq [t (current-transitions component)]
@@ -291,7 +295,10 @@
           (and
             (enable? t current p)
             (not (export? p))
-            (enable? p))))
+            (enable? p)
+            (:value (compute-action!
+                      (:guard? t)
+                      (:environment component))))))
       (:transitions component))))
 
 

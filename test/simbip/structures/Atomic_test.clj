@@ -94,7 +94,7 @@
         I2 (create-port "I2" false)
         E1 (create-port "E1" true {:x :ctrl})
         E2 (create-port "E2" true)
-        t1 (create-transition "t1" start end I1 0 true
+        t1 (create-transition "t1" start end I1 0 "1==1"
                                    "x=x+1;")
         t2 (create-transition "t2" start end E1 1)
         t3 (create-transition "t3" end start I2 0)
