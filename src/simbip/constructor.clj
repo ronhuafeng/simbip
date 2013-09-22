@@ -57,6 +57,11 @@
                                        clojure.lang.PersistentVector]
                        simbip.structure.Compound]
              ^:static [fire [simbip.structure.Compound] void]
+             ^:static [fire [simbip.structure.Atomic] void]
+             ^:static [fire [simbip.structure.Interaction] void]
+             ^:static [isEnable [simbip.structure.Compound] void]
+             ^:static [isEnable [simbip.structure.Atomic] void]
+             ^:static [isEnable [simbip.structure.Interaction] void]
              ^:static [createExport [simbip.structure.Port
                                      simbip.structure.Port
                                      simbip.structure.Atomic]
@@ -95,6 +100,9 @@
 (defn -fire
   [component]
   (fire! component))
+(defn -isEnable
+  [component]
+  (enable? component))
 
 (defn -createPlace
   [name]
