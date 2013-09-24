@@ -95,6 +95,9 @@
 (defn -fire
   [component]
   (fire! component))
+(defn -isEnable
+  [component]
+  (enable? component))
 
 (defn -createPlace
   [name]
