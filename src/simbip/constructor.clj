@@ -56,7 +56,7 @@
                                        clojure.lang.PersistentVector
                                        clojure.lang.PersistentVector]
                        simbip.structure.Compound]
-             ^:static [fire [simbip.structure.Compound] void]
+             ^:static [fire [java.lang.Object] void]
              ^:static [createExport [simbip.structure.Port
                                      simbip.structure.Port
                                      simbip.structure.Atomic]
