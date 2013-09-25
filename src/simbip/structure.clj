@@ -396,9 +396,17 @@
     [this port token]
     (let [current (current-place this)
           ;; get the transition to fire.
-          t (some
-              #(if (enable? % current port) %)
-              (:transitions this))]
+          tl (filter
+               #(and
+                 (enable? % current port)
+                 ;;增加了处理一个 place 上发出的 transition 上有相同 port 的情况
+                 (:value (compute-action!
+                           (:guard? %)
+                           (:environment this))))
+               (:transitions this))
+          t (if (= 1 (count tl))
+              (first tl)
+              (throw (Exception. (str "Enabled transition is not equal to 1, actually " (count tl)))))]
       (do
         (if (nil? (:time token))
           ()
