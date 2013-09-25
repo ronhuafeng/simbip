@@ -396,9 +396,17 @@
     [this port token]
     (let [current (current-place this)
           ;; get the transition to fire.
-          t (some
-              #(if (enable? % current port) %)
-              (:transitions this))]
+          tl (filter
+               #(and
+                 (enable? % current port)
+                 ;;增加了处理一个 place 上发出的 transition 上有相同 port 的情况
+                 (:value (compute-action!
+                           (:guard? %)
+                           (:environment this))))
+               (:transitions this))
+          t (if (= 1 (count tl))
+              (first tl)
+              (throw (Exception. (str "Enabled transition is not equal to 1, actually " (count tl)))))]
       (do
         (if (nil? (:time token))
           ()
@@ -445,7 +453,7 @@
           environment (set-environment var-map)
           up-action (build-ASTs-from-string "")
           down-action (build-ASTs-from-string "")
-          guard-action (build-ASTs-from-string "true")]
+          guard-action (build-ASTs-from-string "1==1")]
       (->Interaction 'Interaction
         name
         port
@@ -464,12 +472,14 @@
            up-action (build-ASTs-from-string (:up-action action-string-map))
            down-action (build-ASTs-from-string (:down-action action-string-map))
            guard-action (build-ASTs-from-string (:guard-action action-string-map))
-           _ (println up-action)
-           _ (println "up-action: " (:up-action action-string-map))
-           _ (println down-action)
-           _ (println "down-action: " (:down-action action-string-map))
-           _ (println down-action)
-           _ (println "guard-action: " (:guard-action action-string-map))
+           ;;_
+           #_(do
+               (println up-action)
+               (println "up-action: " (:up-action action-string-map))
+               (println down-action)
+               (println "down-action: " (:down-action action-string-map))
+               (println down-action)
+               (println "guard-action: " (:guard-action action-string-map)))
           ]
       (->Interaction 'Interaction
         name
@@ -581,9 +591,9 @@
        (if (all-enable? (:connections this))
          (do
            (extract-ports-to-env! this)
-           (compute-action!
-             (:guard-action (:action this))
-             (:environment this)))
+           (:value (compute-action!
+                     (:guard-action (:action this))
+                     (:environment this))))
          false)
        ))
     ([this port]
@@ -594,9 +604,9 @@
        (if (all-enable? (:connections this))
          (do
            (extract-ports-to-env! this)
-           (compute-action!
-             (:guard-action (:action this))
-             (:environment this)))
+           (:value (compute-action!
+                     (:guard-action (:action this))
+                     (:environment this))))
          false)
        )))
 
@@ -618,7 +628,7 @@
       (get-variable c p attr)))
   (retrieve-port
     [this port]
-    (if (all-enable? (:connections this))
+    (if (enable? this port)
       ;; only use the up-action result of the values of ports
       [(create-token
          (do

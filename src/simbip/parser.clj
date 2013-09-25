@@ -302,7 +302,7 @@
             { :operate
               (fn [t1 t2]
                 (do
-                  (println v " applys to " t1 t2 )
+                  ;;(println v " applys to " t1 t2 )
                   {:value
                    (apply op [(:value t1) (:value t2)])}))}
             (".")
@@ -322,9 +322,15 @@
             ))
         ;; 表示返回值可以提供的接口有 name 和 value 两个, name 表示可以作为右值使用。
         "VAR"
-        (let [keyword-name (keyword (:name token))]
-          { :name keyword-name
-            :value (getter keyword-name)})
+        (if (or
+              (= (:name token) "true")
+              (= (:name token) "false"))
+          (if (= (:name token) "true")
+            { :value true}
+            { :value false})
+          (let [keyword-name (keyword (:name token))]
+            { :name keyword-name
+              :value (getter keyword-name)}))
 
         "NUM"
         { :value (read-string (:name token))}
