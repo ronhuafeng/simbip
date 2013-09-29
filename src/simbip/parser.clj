@@ -1,242 +1,38 @@
 (ns simbip.parser
-  (import java.lang.String))
-
-(defn is-alpha?
-  [ch]
-  (or
-    (and (<= (int ch) (int \Z)) (>= (int ch) (int \A)))
-    (and (<= (int ch) (int \z)) (>= (int ch) (int \a)))))
-(defn is-digit?
-  [ch]
-  (and (<= (int ch) (int \9)) (>= (int ch) (int \0))))
-(defn is-whitespace?
-  [ch]
-  (or
-    (= ch \space)
-    (= ch \newline)
-    (= ch \tab)
-    (= ch \return)))
-
-(defn remove-whitespace
-  [expression-string]
-  "Remove all whitespaces from a expression string."
-  (clojure.string/join
-    (remove is-whitespace? expression-string)))
-
-(defn to-single-statements
-  [expression-string]
-  "Split a BIP action string seperated by ';' (a=1;b=2;c=a+b;) into a list of single statements."
-  (remove clojure.string/blank?
-    (clojure.string/split
-      expression-string #";")))
-
-
-(defn tokenize
-  [statement]
-  "Statement is a pure expression without whitespaces and looks like 'a=b' or 'a=3'.
-   Types of tokens: var-name, fun-name, operators, numbers.
-   Comments is not expected at present.
-   Return value is a list of {:name :type}"
-  (if (clojure.string/blank? statement)
-    '()
-    (let [ch (first statement)
-          left (.substring statement 1)]
-      (cond
-      ;; parentheses
-        (= ch \()
-        (cons {:name "(" :type "LP"}
-          (tokenize left))
-        (= ch \))
-        (cons {:name ")" :type "RP"}
-          (tokenize left))
-
-      ;; operator
-        (or
-          (= ch \+)
-          (= ch \-)
-          (= ch \*)
-          (= ch \/)
-          (= ch \%)
-          (= ch \^)
-          (= ch \.))
-        (cons {:name (str ch) :type "OP"}
-          (tokenize left))
-
-      ;; variable
-        (is-alpha? ch)
-        (let [var-name (re-find #"\w+" statement)
-              left (clojure.string/replace-first
-                     statement
-                     var-name
-                     "")]
-          (cons {:name var-name :type "VAR"}
-            (tokenize left)))
-
-      ;; number
-        (is-digit? ch)
-        (let [num-str (re-find #"\d+" statement)
-              left (clojure.string/replace-first
-                     statement
-                     num-str
-                     "")]
-          (cons {:name num-str :type "NUM"}
-            (tokenize left)))
-
-      ;; operator of length-2 (maybe)
-        (or
-          (= ch \!)
-          (= ch \=)
-          (= ch \&)
-          (= ch \|)
-          (= ch \>)
-          (= ch \<))
-        (let [ch2 (first left)]
-          (if (or
-                (is-digit? ch2)
-                (is-alpha? ch2)
-                (= ch2 \())
-            (cons {:name (str ch)
-                   :type "OP"}
-              (tokenize left))
-            (cons {:name (str ch ch2 ) :type "OP"}
-              (tokenize (.substring left 1)))))))))
-
-(defn op-level
-  [op-name]
-  ;; Reference: http://en.cppreference.com/w/cpp/language/operator_precedence
-  (case op-name
-    (".") 1
-    ("!") 2
-    ("*", "/", "%") 4
-    ("+", "-") 5
-    ("<", ">", "<=", ">=") 7
-    ("==", "!=") 8
-    ("&") 9
-    ("^") 10
-    ("|") 11
-    ("&&") 12
-    ("||") 13
-    ("=") 15))
-
-(defn op-diff
-  [current top]
-  "Return if current-operator has higher priority than operator on top of stack, negtive result means higher."
-  (if (or
-        (= top "(")
-        (= current "("))
-    -1
-    (- (op-level current)
-      (op-level top))))
-
-
-
-(defn build-AST-rec
-  [op-stack sym-stack tokens]
-  (if (= 0 (count tokens))
-    ;; check if terms left
-    (if (not-empty sym-stack)
-      ;; check if operators left
-      (if (not-empty op-stack)
-        ;; use operators to combine the  terms in sym-stack
-        (build-AST-rec
-          (rest op-stack)
-          (if (or
-                (= (:name (first op-stack)) "!"))  ;; Uni-operator only pops one sym-token
-            (conj
-              (rest sym-stack)
-              (list (first op-stack)
-                (first sym-stack)))
-            (conj
-              (rest (rest sym-stack))
-              (list (first op-stack)
-                (second sym-stack)
-                (first sym-stack))))
-          (rest tokens))
-        ;; only orphan term left
-        (first sym-stack))
-      '())
-    (let [t (first tokens)]
-      (case (:type t)
-        ;; If the first token is a variable or a number, then we push it into the stack of symbols.
-        ("VAR", "NUM")
-        (build-AST-rec
-          op-stack
-          (conj sym-stack (list t))
-          (rest tokens))
-
-        ;; If the first token is an operator, then we compare its priority with the top of the stack of
-        ;; operators. We only push the operator into the stack when its priority is higher than the top
-        ;; element.
-        "OP"
-        (let [top (first op-stack)]
-          (if (nil? top)
-            (build-AST-rec
-              (conj op-stack t)
-              sym-stack
-              (rest tokens))
-            (let [d (op-diff (:name t) (:name top))]
-              (cond
-                ;; Current operator with higher priority. Push current operator into the stack.
-                (neg? d)
-                (build-AST-rec
-                  (conj op-stack t)
-                  sym-stack
-                  (rest tokens))
-                ;; Meets an operator with equal (assume the operator is left-associative) or lower priority.
-                ;; To make a new expression using the operator at top of op-stack
-                ;; and two term at top of sys-stack.
-                (or
-                  (zero? d)
-                  (pos? d))
-                (build-AST-rec
-                  (rest op-stack)
-                  (if (or
-                        (= (:name top) "!"))  ;; Uni-operator only pops one sym-token
-                    (conj
-                      (rest sym-stack)
-                      (list top
-                        (first sym-stack)))
-                    (conj
-                      (rest (rest sym-stack))
-                      (list (first op-stack)
-                        (second sym-stack)
-                        (first sym-stack))))
-                  tokens)))))
-        ;; If meets left parenthesis, push it into stack.
-        "LP"
-        (build-AST-rec
-          (conj op-stack t)
-          sym-stack
-          (rest tokens))
-
-        "RP"
-        (if (= "(" (:name (first op-stack)))
-          (build-AST-rec
-            (rest op-stack)
-            sym-stack
-            (rest tokens))
-          (build-AST-rec
-            (rest op-stack)
-            (conj
-              (rest (rest sym-stack))
-              (list (first op-stack)
-                (second sym-stack)
-                (first sym-stack))
-              )
-            tokens))
-        ))))
-
+  (import java.lang.String)
+  (:import
+    (ast ExprLexer ExprBuildTree ExprParser)
+    (java.io ByteArrayInputStream)
+    (org.antlr.v4.runtime CommonTokenStream ANTLRInputStream)
+    ))
 
 (defn build-AST
-  [tokens]
-  (build-AST-rec '() '() tokens))
+  [action-string]
+  (let [ string-stream (ByteArrayInputStream. (.getBytes action-string))
+         input (ANTLRInputStream. string-stream)
+         lexer (ExprLexer. input)
+         tokens (CommonTokenStream. lexer)
+         parser (ExprParser. tokens)
+         ast (.visitDo_action (ExprBuildTree.)
+               (.do_action parser))
+         builder (fn rec-build [node]
+                     (case (get node "tag")
+                       "OP"
+                       (cons
+                         {:type "OP" :name (get node "value")}
+                         (map #(rec-build %) (get node "arg-list")))
+                       ("Keyword", "keyword")
+                       (cons
+                         {:type "Keyword" :name (get node "value")}
+                         (map #(rec-build %) (get node "arg-list")))
+                       "Identifier"
+                       (list
+                         {:type "VAR" :name (get node "value")})
+                       ("Integer", "Boolean")
+                       (list
+                         {:type "NUM" :value (get node "value")})))]
+    (builder ast)))
 
-(defn build-ASTs-from-string
-  [statements-string]
-  (map
-    (comp build-AST tokenize)
-    (to-single-statements
-      (remove-whitespace statements-string))))
 
 (defn set-environment
   [atomic-map]
@@ -256,8 +52,11 @@
 (defn operator-table
   [op-name]
   (case op-name
-    "." (fn [keyword1 keyword2]
-          (str (name keyword1) "-" (name keyword2)))
+    "." (fn [keyword-head & keyword-postfix]
+          (apply str
+            (cons (name keyword-head)
+              (map #(str "-" (name %)) keyword-postfix)))
+          #_(str (name keyword1) "-" (name keyword2)))
     "!" not
     "*" *
     "/" /
@@ -273,11 +72,33 @@
     "&" bit-and
     "^" bit-xor
     "|" bit-or
-    "&&" (fn [a b] (and a b))
-    "||" (fn [a b] (or a b))
+    "&&" (fn rec-and [a & args]
+           (and a
+             (if (empty? args)
+               true
+               (rec-and args))))
+    "||" (fn rec-or [a & args]
+           (or a
+             (if (empty? args)
+               false
+               (rec-or args))))
     "=" (fn [setter name value ]
           (setter name value))
     ))
+
+(defn keyword-table
+  [k]
+  (case k
+    "if"
+    (fn [condition then-value else-value]
+      (if condition
+        then-value
+        else-value))
+    "do"
+    (fn [& stmt-values]
+      (if (empty? stmt-values)
+        nil
+        (last stmt-values)))))
 
 (defn get-trans-interface
   [env]
@@ -290,36 +111,59 @@
               op (operator-table v)]
           ;; 在接下来的构建中，假设 t 是代表实现了 name value operate 等的 token， 实际上应该遇不到实现了 operate 的 token。
           (case v
-            ("!")
-            { :operate
-              (fn [t]
-                {:value
-                 (apply op [(:value t)])})}
-            ;; 二元操作符们
+;            ("!")
+;            { :operate
+;              (fn [t]
+;                {:value
+;                 (apply op [(:value t)])})}
+            ;; 运算操作符们
             ( "*", "/", "%", "+", "-", ">", "<",
               "<=", ">=", "==", "!=", "&", "^", "|",
-              "&&", "||")
+              "&&", "||", "!")
             { :operate
-              (fn [t1 t2]
+              (fn [& args]
                 (do
-                  ;;(println v " applys to " t1 t2 )
+                  (println v " applys to " args )
                   {:value
-                   (apply op [(:value t1) (:value t2)])}))}
+                   (apply op
+                     (map
+                       #(let [value (:value %)]
+                        ;; 处理变量没有绑定值的情况
+                          (if (nil? value)
+                            (if (contains? % :name)
+                              (throw (Exception.
+                                       (str "No value is bind to " (:name %))))
+                              (do
+                                (println %)
+                                (throw (Exception.
+                                         (str "No value found for operator " v)))))
+                            value))
+                       args))}))}
             (".")
             { :operate
-              (fn [t1 t2]
-                (let [ complete-name (keyword (op (:name t1) (:name t2)))
+              (fn [& args]
+                (let [ complete-name (keyword (apply op (map :name args)))
                        complete-value (getter complete-name)]
                   { :name complete-name
                     :value complete-value}))}
             ;;
             ("=")
             { :operate
-              (fn [t1 t2]
+              (fn [lv rv]
                 (do
-                  (apply op [setter (:name t1) (:value t2)])  ;; 一开始错把第一个 t1 的选择属性写成了 :value。
-                  {:value (:value t2)}))}
-            ))
+                  (apply op [setter (:name lv) (:value rv)])  ;; 一开始错把第一个 t1 的选择属性写成了 :value。
+                  {:value (:value rv)}))}))
+
+        "Keyword"
+
+        (let [action (keyword-table (:name token))]
+          { :operate (fn [& args]
+                       {:value (apply action (map :value args))})
+            })
+
+
+
+
         ;; 表示返回值可以提供的接口有 name 和 value 两个, name 表示可以作为右值使用。
         "VAR"
         (if (or
@@ -333,29 +177,20 @@
               :value (getter keyword-name)}))
 
         "NUM"
-        { :value (read-string (:name token))}
-        ))))
+        { :value (:value token)}))))
 
-(defn build-exec
+
+(defn exec-ast
   [trans ast]
   (if (empty? ast)
     false
-    (let [tr-root (trans (first ast))
-          leafs (rest ast)]
+    (let [ tr-root (trans (first ast))
+           leafs (rest ast)]
       (if (empty? leafs)
         tr-root
         ( apply
           (:operate tr-root)
-          (map #(build-exec trans %) leafs))))))
-
-(defn build-exec-list
-  ;; assume ast-list has at least one element
-  [trans ast-list]
-  (let [result (build-exec trans (first ast-list))]
-    (if (= '() (rest ast-list))
-      result
-      (build-exec-list trans (rest ast-list))))
-  )
+          (map #(exec-ast trans %) leafs))))))
 
 (defn environment-synchronize
   [val-map env2-map key-map]
@@ -371,40 +206,21 @@
         (keys key-map)))))
 
 (defn compute-action!
-  [ast-list env]
-  (if (empty? ast-list)
+  [ast env]
+  (if (empty? ast)
     true
-    (build-exec-list
+    (exec-ast
       (get-trans-interface env)
-      ast-list)))
+      ast)))
 
-#_(tokenize "(a+b+c)")
-#_(build-AST (tokenize "e==(a+(b+(c*d)))"))
+
 (do
   (def env1 (atom {}))
   (def env (set-environment env1))
   (def tr (get-trans-interface env))
-  (def ast-list  (build-ASTs-from-string "1==1;a=2; b=3; c=4; a+b>c;"))
+  (def ast  (build-AST "a = 2;b=3;c=4;d=a+b*c;"))
 
 
 
-  (def tt (build-exec-list tr ast-list))
-  (def ast  (build-AST (tokenize "a+b>c")))
-
-  (def rs (build-exec tr ast)))
-
-
-
-(do
-  (def ast  (build-AST (tokenize "1==1")))
-  (def env1 (atom {}))
-  (def env (set-environment env1))
-  (def tr (get-trans-interface env))
-
-  (def result (build-exec tr ast)))
-#_(build-AST (tokenize "a=5"))
-
-(def env1-map {:a 1 :b 2})
-(def env2-map (atom {:x 2 :y 4}))
-(environment-synchronize env1-map env2-map {:a :x :b :y})
+  (def tt (exec-ast tr ast)))
 

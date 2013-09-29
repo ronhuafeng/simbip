@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
   <component name="IdProvider" IDEtalkID="9B2E0FF26823FB1CF7AB3DE38283AB5D" />
   <component name="LeiningenProjectsManager">
     <option name="projectFiles">

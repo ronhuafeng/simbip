@@ -168,8 +168,8 @@
              2
              {
               :up-action    "x1=dev.x;x2=ctrl.x;"
-              :down-action  "dev.x=x1+x2;ctrl.x=x1+x2;"
-              :guard-action "1==1"
+              :down-action  "if true then dev.x=x1+x2;ctrl.x=x1+x2; fi"
+              :guard-action "true"
                }
              {:p1-x :dev-x :p2-x :ctrl-x})
 
@@ -249,7 +249,7 @@
              {
               :up-action   "x1=dev.x;x2=ctrl.x;"
               :down-action "dev.x=x1+x1;ctrl.x=x1+x2;"
-              :guard-action "1==1"
+              :guard-action "true;"
                }
              {:p1-x :dev-x :p2-x :ctrl-x})
 
@@ -280,7 +280,7 @@
              {
               :up-action   "x1=dev.x1;x=ctrl.x;"
               :down-action "dev.x1 = x1+1;ctrl.x=x1+1;"
-              :guard-action "1==1"
+              :guard-action "true"
                }
              {:ec-x1 :dev-x1 :p4-x :ctrl-x})]
     (testing "all-in-one test 2 of Compount"
