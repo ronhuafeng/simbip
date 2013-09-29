@@ -149,7 +149,7 @@
              {
               :up-action   ""
               :down-action "dev.x=dev.x+ctrl.x;"
-              :guard-action "1==1"
+              :guard-action "true;"
                }
              {:e1-x :dev-x :r1-x :ctrl-x})
         G2 (create-interaction
@@ -161,7 +161,7 @@
              {
               :up-action "xx=dev.x;"
               :down-action ""
-              :guard-action "true"
+              :guard-action "true;"
                }
              {:e1-x :dev-x :r1-x :ctrl-x})]
     (testing "all-in-one testing of Interaction with vars."

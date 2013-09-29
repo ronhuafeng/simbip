@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#inclusive_or_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#inclusive_or_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -50,7 +50,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#assignment_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#assignment_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -73,7 +73,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#multiplicative_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#multiplicative_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -110,7 +110,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#relational_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#relational_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -147,7 +147,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#exclusive_or_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#exclusive_or_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -177,7 +177,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#statement}.
+	 * Visit a parse tree produced by {@link ExprParser#statement}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -191,9 +191,9 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 		{
 			node = visitAssignment_expression(ctx.assignment_expression());
 		}
-		else if (ctx.postfix_expression() != null)
+		else if (ctx.logical_or_expression() != null)
 		{
-			node = visitPostfix_expression(ctx.postfix_expression());
+			node = visitLogical_or_expression(ctx.logical_or_expression());
 		}
 		else if (ctx.if_then_else_expression() != null)
 		{
@@ -202,7 +202,6 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 		else
 		{
 			node = null;
-			System.out.println("Statement rule mismatch!");
 		}
 
 
@@ -210,7 +209,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#logical_and_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#logical_and_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -240,7 +239,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#additive_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#additive_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -270,7 +269,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#if_then_else_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#if_then_else_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -314,7 +313,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 
 		Map<String, Object> node = new HashMap<String, Object>();
 
-		node.put("tag", "keyword");
+		node.put("tag", "Keyword");
 		node.put("value", "if");
 		node.put("arg-list", argList);
 
@@ -322,7 +321,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#postfix_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#postfix_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -352,7 +351,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#do_action}.
+	 * Visit a parse tree produced by {@link ExprParser#do_action}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -363,14 +362,18 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 
 		Map<String, Object> node = new HashMap<String, Object>();
 
-		node.put("tag", "keyword");
+		node.put("tag", "Keyword");
 		node.put("value", "do");
 
 		if (ctx.statement().size() > 0)
 		{
 			for (ExprParser.StatementContext e: ctx.statement())
 			{
-				argList.add(visitStatement(e));
+				Map<String, Object> stmt = visitStatement(e);
+				if (stmt != null)
+				{
+					argList.add(stmt);
+				}
 			}
 		}
 
@@ -380,7 +383,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#equality_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#equality_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -418,7 +421,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#primary_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#primary_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -442,7 +445,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#and_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#and_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -471,7 +474,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#unary_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#unary_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -497,7 +500,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#logical_or_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#logical_or_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -526,7 +529,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
-	 * Visit a parse tree produced by {@link ast.ExprParser#subtractive_expression}.
+	 * Visit a parse tree produced by {@link ExprParser#subtractive_expression}.
 	 *
 	 * @param ctx the parse tree
 	 * @return the visitor result

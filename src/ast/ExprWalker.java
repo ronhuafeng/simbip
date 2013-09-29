@@ -153,6 +153,8 @@ public class ExprWalker extends ExprBaseListener {
 
 	@Override
 	public void enterDo_action(@NotNull ExprParser.Do_actionContext ctx) {
+		System.out.println("Statements count: " + ctx.statement().size());
+
 		super.enterDo_action(ctx);    //To change body of overridden methods use File | Settings | File Templates.
 	}
 

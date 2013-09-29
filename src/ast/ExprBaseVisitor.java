@@ -1,9 +1,10 @@
-package ast;// Generated from G:\Tsmart Projects\ParseBIP\src\Expr.g4 by ANTLR 4.1
+// Generated from G:\Tsmart Projects\ParseBIP\src\ast\Expr.g4 by ANTLR 4.1
+package ast;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
- * This class provides an empty implementation of {@link ast.ExprVisitor},
+ * This class provides an empty implementation of {@link ExprVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
  * of the available methods.
  *

@@ -159,8 +159,8 @@
      target
      port
      0
-     (build-ASTs-from-string "1==1") ;; guard
-     (build-ASTs-from-string "") ;; action
+     (build-AST "true;") ;; guard
+     (build-AST "") ;; action
      ))
   ([name source target port time]
    (->Transition 'Transition
@@ -169,12 +169,12 @@
      target
      port
      time
-     (build-ASTs-from-string "1==1") ;; guard
-     (build-ASTs-from-string "") ;; action
+     (build-AST "true;") ;; guard
+     (build-AST "") ;; action
      ))
   ([name source target port time guard-string action-string]
-    (let [ action! (build-ASTs-from-string action-string)
-           guard? (build-ASTs-from-string guard-string)]
+    (let [ action! (build-AST action-string)
+           guard? (build-AST (str guard-string ";"))]
       (->Transition 'Transition
         name
         source
@@ -312,7 +312,7 @@
 
     ;; action stuff
     (let [trans (get-trans-interface (:environment component))]
-      (build-exec-list trans (:action! t)))
+      (exec-ast trans (:action! t)))
 
     ;;some time stuff
     (set-time
@@ -451,9 +451,9 @@
   ([^String name port connections ^Integer time]
     (let [var-map (atom {})
           environment (set-environment var-map)
-          up-action (build-ASTs-from-string "")
-          down-action (build-ASTs-from-string "")
-          guard-action (build-ASTs-from-string "1==1")]
+          up-action (build-AST "")
+          down-action (build-AST "")
+          guard-action (build-AST "true;")]
       (->Interaction 'Interaction
         name
         port
@@ -469,9 +469,9 @@
   ([name port connections time action-string-map var-list]
     (let [ var-map (atom {})
            environment (set-environment var-map)
-           up-action (build-ASTs-from-string (:up-action action-string-map))
-           down-action (build-ASTs-from-string (:down-action action-string-map))
-           guard-action (build-ASTs-from-string (:guard-action action-string-map))
+           up-action (build-AST (:up-action action-string-map))
+           down-action (build-AST (:down-action action-string-map))
+           guard-action (build-AST (str (:guard-action action-string-map) ";"))
            ;;_
            #_(do
                (println up-action)
