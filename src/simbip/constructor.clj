@@ -56,6 +56,11 @@
                                        clojure.lang.PersistentVector
                                        clojure.lang.PersistentVector]
                        simbip.structure.Compound]
+             ^:static [createCompound [String
+                                       clojure.lang.PersistentVector
+                                       clojure.lang.PersistentVector
+                                       clojure.lang.PersistentVector]
+                       simbip.structure.Compound]
              ^:static [fire [java.lang.Object] void]
              ^:static [createExport [simbip.structure.Port
                                      simbip.structure.Port
@@ -68,6 +73,10 @@
              ^:static [createExport [simbip.structure.Port
                                      simbip.structure.Port
                                      simbip.structure.Interaction]
+                       clojure.lang.PersistentArrayMap]
+             ^:static [createPriority [java.lang.Object
+                                       java.lang.Object
+                                       String]
                        clojure.lang.PersistentArrayMap]
              ^:static [createConnection [simbip.structure.Atomic
                                          simbip.structure.Port]
@@ -91,6 +100,9 @@
 (defn -createExport
   [^simbip.structure.Port target ^simbip.structure.Port source source-component]
   {:target target :source source :source-component source-component})
+(defn -createPriority
+  [low high guard-string]
+  (make-priority low high guard-string))
 
 (defn -fire
   [component]
@@ -137,8 +149,10 @@
 
 
 (defn -createCompound
-  [name subcomponents exports]
-  (create-compound name subcomponents exports))
+  ([name subcomponents exports]
+    (create-compound name subcomponents exports))
+  ( [name subcomponents exports priorities]
+    (create-compound name subcomponents exports priorities)))
 
 (defn -allSubComponents
   [component]
