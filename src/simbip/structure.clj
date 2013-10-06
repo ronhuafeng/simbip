@@ -791,7 +791,7 @@
               candidates)))
         candidates))))
 
-(defn- enabled-subcomponents
+(defn enabled-subcomponents
   [compound]
   (let [component-list (filter
                          #(enable? %)
