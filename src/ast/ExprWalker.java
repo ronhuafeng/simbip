@@ -24,6 +24,26 @@ public class ExprWalker extends ExprBaseListener {
 		super.exitInclusive_or_expression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void enterObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx) {
+		super.enterObjectExpression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void exitObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx) {
+		super.exitObjectExpression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
 
 	@Override
 	public void enterAssignment_expression(@NotNull ExprParser.Assignment_expressionContext ctx) {
@@ -53,6 +73,26 @@ public class ExprWalker extends ExprBaseListener {
 	@Override
 	public void exitRelational_expression(@NotNull ExprParser.Relational_expressionContext ctx) {
 		super.exitRelational_expression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void enterFunctionCall(@NotNull ExprParser.FunctionCallContext ctx) {
+		super.enterFunctionCall(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void exitFunctionCall(@NotNull ExprParser.FunctionCallContext ctx) {
+		super.exitFunctionCall(ctx);    //To change body of overridden methods use File | Settings | File Templates.
 	}
 
 	@Override
@@ -133,21 +173,6 @@ public class ExprWalker extends ExprBaseListener {
 	@Override
 	public void exitIf_then_else_expression(@NotNull ExprParser.If_then_else_expressionContext ctx) {
 		super.exitIf_then_else_expression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
-	}
-
-	@Override
-	public void enterPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx) {
-		super.enterPostfix_expression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
-		System.out.println("Primaries: ");
-		for (ExprParser.Primary_expressionContext e: ctx.primary_expression())
-		{
-			System.out.println("." + e.getText());
-		}
-	}
-
-	@Override
-	public void exitPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx) {
-		super.exitPostfix_expression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
 	}
 
 
@@ -234,6 +259,25 @@ public class ExprWalker extends ExprBaseListener {
 		super.exitSubtractive_expression(ctx);    //To change body of overridden methods use File | Settings | File Templates.
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void enterArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx) {
+		super.enterArgument_expression_list(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void exitArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx) {
+		super.exitArgument_expression_list(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
 
 
 	@Override

@@ -19,6 +19,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitInclusive_or_expression(@NotNull ExprParser.Inclusive_or_expressionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link ExprParser#ObjectExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link ExprParser#assignment_expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -38,6 +45,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRelational_expression(@NotNull ExprParser.Relational_expressionContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#FunctionCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionCall(@NotNull ExprParser.FunctionCallContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link ExprParser#exclusive_or_expression}.
@@ -73,13 +87,6 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIf_then_else_expression(@NotNull ExprParser.If_then_else_expressionContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link ExprParser#postfix_expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link ExprParser#do_action}.
@@ -129,4 +136,11 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSubtractive_expression(@NotNull ExprParser.Subtractive_expressionContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#argument_expression_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx);
 }

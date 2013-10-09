@@ -20,6 +20,17 @@ public interface ExprListener extends ParseTreeListener {
 	void exitInclusive_or_expression(@NotNull ExprParser.Inclusive_or_expressionContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link ExprParser#ObjectExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExprParser#ObjectExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link ExprParser#assignment_expression}.
 	 * @param ctx the parse tree
 	 */
@@ -51,6 +62,17 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRelational_expression(@NotNull ExprParser.Relational_expressionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link ExprParser#FunctionCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCall(@NotNull ExprParser.FunctionCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExprParser#FunctionCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCall(@NotNull ExprParser.FunctionCallContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link ExprParser#exclusive_or_expression}.
@@ -106,17 +128,6 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIf_then_else_expression(@NotNull ExprParser.If_then_else_expressionContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link ExprParser#postfix_expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ExprParser#postfix_expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link ExprParser#do_action}.
@@ -194,4 +205,15 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSubtractive_expression(@NotNull ExprParser.Subtractive_expressionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link ExprParser#argument_expression_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExprParser#argument_expression_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx);
 }

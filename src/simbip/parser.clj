@@ -25,6 +25,10 @@
                        (cons
                          {:type "Keyword" :name (get node "value")}
                          (map #(rec-build %) (get node "arg-list")))
+                       ("FunctionCall")
+                       (cons
+                         {:type "FunctionCall" :name (get node "value")}
+                         (map #(rec-build %) (get node "arg-list")))
                        "Identifier"
                        (list
                          {:type "VAR" :name (get node "value")})
@@ -100,6 +104,13 @@
         nil
         (last stmt-values)))))
 
+(defn function-table
+  [fun]
+  (case fun
+    "max"
+    (fn [& vl]
+      (apply max vl))))
+
 (defn get-trans-interface
   [env]
   (let [setter (env 'set)
@@ -161,7 +172,10 @@
                        {:value (apply action (map :value args))})
             })
 
-
+        "FunctionCall"
+        (let [action (function-table (:name token))]
+          { :operate (fn [& args]
+                       {:value (apply action (map :value args))})})
 
 
         ;; 表示返回值可以提供的接口有 name 和 value 两个, name 表示可以作为右值使用。
@@ -186,11 +200,11 @@
     false
     (let [ tr-root (trans (first ast))
            leafs (rest ast)]
-      (if (empty? leafs)
-        tr-root
+      (if (contains? tr-root :operate)
         ( apply
           (:operate tr-root)
-          (map #(exec-ast trans %) leafs))))))
+          (map #(exec-ast trans %) leafs))
+        tr-root))))
 
 (defn environment-synchronize
   [val-map env2-map key-map]
@@ -218,7 +232,7 @@
   (def env1 (atom {}))
   (def env (set-environment env1))
   (def tr (get-trans-interface env))
-  (def ast  (build-AST "a = 2;b=3;c=4;d=a+b*c;"))
+  (def ast  (build-AST "a = 2;b=3;c=4;d=a+b*c; e=max(1,2,3,4,5);"))
 
 
 

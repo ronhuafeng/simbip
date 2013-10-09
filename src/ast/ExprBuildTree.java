@@ -147,6 +147,29 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	}
 
 	/**
+	 * Visit a parse tree produced by .
+	 *
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	@Override
+	public Map<String, Object> visitFunctionCall(@NotNull ExprParser.FunctionCallContext ctx) {
+		Map<String, Object> node = new HashMap<String, Object>();
+
+		List<Map<String, Object>> argList = new ArrayList<Map<String, Object>>();
+		if (ctx.argument_expression_list() != null)
+		{
+			argList = (List<Map<String, Object>>) visitArgument_expression_list(ctx.argument_expression_list()).get("arg-list");
+		}
+
+		node.put("tag", "FunctionCall");
+		node.put("value", ctx.primary_expression().getText());
+		node.put("arg-list", argList);
+
+		return node;  //To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	/**
 	 * Visit a parse tree produced by {@link ExprParser#exclusive_or_expression}.
 	 *
 	 * @param ctx the parse tree
@@ -326,8 +349,24 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	@Override
 	public Map<String, Object> visitPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx) {
+
+		if (ctx instanceof ExprParser.ObjectExpressionContext)
+		{
+			return visitObjectExpression((ExprParser.ObjectExpressionContext) ctx);
+		}
+		else if (ctx instanceof ExprParser.FunctionCallContext)
+		{
+			return visitFunctionCall((ExprParser.FunctionCallContext) ctx);
+		}
+		else {
+			System.err.println("This should not happen.");
+			return  null;
+		}
+	}
+
+	@Override
+	public Map<String, Object> visitObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx) {
 		Map<String, Object> node = new HashMap<String, Object>();
 
 		if (ctx.primary_expression().size() > 1)
@@ -489,6 +528,7 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 			node.put("value", ctx.op.getText());
 			List<Map<String, Object>> argList = new ArrayList<Map<String, Object>>();
 
+
 			argList.add(visitPostfix_expression(ctx.postfix_expression()));
 		}
 		else
@@ -553,6 +593,31 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 		{
 			node = visitMultiplicative_expression(ctx.multiplicative_expression(0));
 		}
+
+
+		return node;  //To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * Visit a parse tree produced by {@link ast.ExprParser#argument_expression_list}.
+	 *
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	@Override
+	public Map<String, Object> visitArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx) {
+		Map<String, Object> node = new HashMap<String, Object>();
+
+		List<Map<String, Object>> argList = new ArrayList<Map<String, Object>>();
+
+		for (ExprParser.Logical_or_expressionContext e: ctx.logical_or_expression())
+		{
+			argList.add(visitLogical_or_expression(e));
+		}
+
+		node.put("tag", "Keyword");
+		node.put("value", "argument-list");
+		node.put("arg-list", argList);
 
 
 		return node;  //To change body of implemented methods use File | Settings | File Templates.

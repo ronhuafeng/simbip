@@ -30,6 +30,19 @@ public class ExprBaseListener implements ExprListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitObjectExpression(@NotNull ExprParser.ObjectExpressionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterAssignment_expression(@NotNull ExprParser.Assignment_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -63,6 +76,19 @@ public class ExprBaseListener implements ExprListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitRelational_expression(@NotNull ExprParser.Relational_expressionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterFunctionCall(@NotNull ExprParser.FunctionCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitFunctionCall(@NotNull ExprParser.FunctionCallContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -128,19 +154,6 @@ public class ExprBaseListener implements ExprListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitIf_then_else_expression(@NotNull ExprParser.If_then_else_expressionContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitPostfix_expression(@NotNull ExprParser.Postfix_expressionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -232,6 +245,19 @@ public class ExprBaseListener implements ExprListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitSubtractive_expression(@NotNull ExprParser.Subtractive_expressionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitArgument_expression_list(@NotNull ExprParser.Argument_expression_listContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
