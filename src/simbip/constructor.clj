@@ -95,7 +95,9 @@
              ^:static [getVariableStrings [simbip.structure.Atomic]
                        clojure.lang.LazySeq]
              ^:static [isEnable [Object]
-                       Boolean]]))
+                       Boolean]
+             ^:static [getKeyword [String]
+                       clojure.lang.Keyword]]))
 
 (defn -createToken
   [value time]
@@ -105,6 +107,9 @@
   (if (true? (enable? c))
     true
     false))
+(defn -getKeyword
+  [str]
+  (keyword str))
 
 (defn -createExport
   [^simbip.structure.Port target ^simbip.structure.Port source source-component]
