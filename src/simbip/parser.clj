@@ -198,13 +198,30 @@
   [trans ast]
   (if (empty? ast)
     false
-    (let [ tr-root (trans (first ast))
+    (let [ root (first ast)
+           tr-root (trans root)
            leafs (rest ast)]
-      (if (contains? tr-root :operate)
-        ( apply
-          (:operate tr-root)
-          (map #(exec-ast trans %) leafs))
-        tr-root))))
+      (if (= "if" (:name root))
+        ;;"An ugly hack."
+        (let [condition (exec-ast trans (first leafs))]
+          (if (true? (:value condition))
+            (apply
+              (:operate tr-root)
+              (list
+                {:value true}
+                (exec-ast trans (nth leafs 1))
+                nil))
+            (apply
+              (:operate tr-root)
+              (list
+                {:value false}
+                nil
+                (exec-ast trans (nth leafs 2))))))
+        (if (contains? tr-root :operate)
+          (apply
+            (:operate tr-root)
+            (map #(exec-ast trans %) leafs))
+          tr-root)))))
 
 (defn environment-synchronize
   [val-map env2-map key-map]

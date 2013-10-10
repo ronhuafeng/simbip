@@ -93,11 +93,18 @@
              ^:static [currentPlace [simbip.structure.Atomic]
                        simbip.structure.Place]
              ^:static [getVariableStrings [simbip.structure.Atomic]
-                       clojure.lang.LazySeq]]))
+                       clojure.lang.LazySeq]
+             ^:static [isEnable [Object]
+                       Boolean]]))
 
 (defn -createToken
   [value time]
   (create-token value time))
+(defn -isEnable
+  [c]
+  (if (true? (enable? c))
+    true
+    false))
 
 (defn -createExport
   [^simbip.structure.Port target ^simbip.structure.Port source source-component]
