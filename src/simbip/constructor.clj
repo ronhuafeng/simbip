@@ -97,11 +97,16 @@
              ^:static [isEnable [Object]
                        Boolean]
              ^:static [getKeyword [String]
-                       clojure.lang.Keyword]]))
+                       clojure.lang.Keyword]
+             ^:static [getSnapshot [simbip.structure.Compound]
+                       clojure.lang.PersistentArrayMap]
+             ^:static [restoreSnapshot [simbip.structure.Compound
+                                        clojure.lang.PersistentArrayMap]
+                       void]]))
 
 (defn -createToken
-  [value time]
-  (create-token value time))
+  [value timestamp]
+  (create-token value timestamp))
 (defn -isEnable
   [c]
   (if (true? (enable? c))
@@ -126,6 +131,16 @@
 (defn -fire
   [component]
   (fire! component))
+
+(defn -getSnapshot
+  [this]
+  (get-snapshot this))
+(defn -restoreSnapshot
+  [this snapshot]
+  (restore-snapshot!
+    this
+    snapshot))
+
 (defn -isEnable
   [component]
   (enable? component))
@@ -145,26 +160,26 @@
 (defn -createTransition
   ([name source target port]
    (create-transition name source target port))
-  ([name source target port time]
-   (create-transition name source target port time))
-  ([name source target port time guard action]
-   (create-transition name source target port time guard action)))
+  ([name source target port timestamp]
+   (create-transition name source target port timestamp))
+  ([name source target port timestamp guard action]
+   (create-transition name source target port timestamp guard action)))
 
 (defn -createAtomic
-  ([name ports places init transitions time]
-   (create-atomic name ports places init transitions time))
-  ([name ports places init transitions time variables]
-   (create-atomic name ports places init transitions time variables)))
+  ([name ports places init transitions timestamp]
+   (create-atomic name ports places init transitions timestamp))
+  ([name ports places init transitions timestamp variables]
+   (create-atomic name ports places init transitions timestamp variables)))
 
 (defn -createConnection
   [component port]
   {:component component :port port})
 
 (defn -createInteraction
-  ([name port connections time]
-   (create-interaction name port connections time))
-  ([name port connections time action-string-map var-list]
-   (create-interaction name port connections time action-string-map var-list)))
+  ([name port connections timestamp]
+   (create-interaction name port connections timestamp))
+  ([name port connections timestamp action-string-map var-list]
+   (create-interaction name port connections timestamp action-string-map var-list)))
 
 
 (defn -createCompound

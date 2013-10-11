@@ -50,12 +50,12 @@
       (is (enable? c3))
       (do
         (fire! c3)
-        (is (= 1 (get-time c1)))
-        (is (= 2 (get-time c2)))
+        (is (= 1 (get-timestamp c1)))
+        (is (= 2 (get-timestamp c2)))
         (fire! c1)
         (fire! c2)
-        (is (= 2 (get-time c1)))
-        (is (= 4 (get-time c2)))))))
+        (is (= 2 (get-timestamp c1)))
+        (is (= 4 (get-timestamp c2)))))))
 
 
 (deftest all-in-one-test2
@@ -109,14 +109,14 @@
       (is (not= [] (retrieve-port c3 EC)))
 
       (do
-        (assign-port! c3 EC {:time 2})
+        (assign-port! c3 EC {:timestamp 2})
         (is (enable? c1))
         (is (enable? c2))
         (is (enable? c3))
         (is (not (enable? I1)))
 
-        (is (= 4 (get-time c1)))
-        (is (= 5 (get-time c2)))
+        (is (= 4 (get-timestamp c1)))
+        (is (= 5 (get-timestamp c2)))
 
         (fire! c3)
         (fire! c3)
@@ -187,14 +187,14 @@
       (is (not= [] (retrieve-port c3 EC)))
 
       (do
-        (assign-port! c3 EC {:value {} :time 2})
+        (assign-port! c3 EC {:value {} :timestamp 2})
         (is (enable? c1))
         (is (enable? c2))
         (is (enable? c3))
         (is (not (enable? I1)))
 
-        (is (= 4 (get-time c1)))
-        (is (= 5 (get-time c2)))
+        (is (= 4 (get-timestamp c1)))
+        (is (= 5 (get-timestamp c2)))
 
         (is (= 2 (get-variable c1 :x )))
         (is (= 2 (get-variable c2 :x )))
@@ -292,12 +292,32 @@
         (is (enable? c3 EC))
         (is (= (get-export c3 EC)
               {:source EI :source-component I1 :target EC}))
-        (is (= [{:time 0 :value {:ei-x1 2}}] (retrieve-port I1 EI)))
-        (is (= [{:time 0 :value {:ec-x1 2}}] (retrieve-port c3 EC))))
+        (is (= [{:timestamp 0 :value {:ei-x1 2}}] (retrieve-port I1 EI)))
+        (is (= [{:timestamp 0 :value {:ec-x1 2}}] (retrieve-port c3 EC))))
 
       (do
-        (fire! I2)
+        (let [c3-snapshot (get-snapshot c3)]
+          (fire! I2)
+          (println (get-snapshot c3))
 
-        (is (= 6 (get-variable c1 :x )))
-        (is (= 5 (get-variable c2 :x )))
-        (is (= 3 (get-variable c4 :x )))))))
+
+          (is (= 6 (get-variable c1 :x )))
+          (is (= 5 (get-variable c2 :x )))
+          (is (= 3 (get-variable c4 :x )))
+
+
+          (restore-snapshot! c3
+            c3-snapshot)
+          (is (= 2 (get-variable c1 :x )))
+          (is (= 2 (get-variable c2 :x )))
+          (do
+            (is (not (enable? c1)))
+            (is (not (enable? c2)))
+            (is (not (enable? I1)))
+            (is (enable? I1 EI))
+            (is (enable? c3 EC))
+            (is (= (get-export c3 EC)
+                  {:source EI :source-component I1 :target EC}))
+            (is (= [{:timestamp 0 :value {:ei-x1 2}}] (retrieve-port I1 EI)))
+            (is (= [{:timestamp 0 :value {:ec-x1 2}}] (retrieve-port c3 EC)))))
+        ))))

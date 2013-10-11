@@ -39,11 +39,11 @@
              0)]
     (testing "all-in-one test of atomic component"
       (do
-        (is (= 0 (get-time C1)))
-        (set-time C1 2)
-        (is (= 2 (get-time C1)))
-        (set-time C1 0)
-        (is (= 0 (get-time C1))))
+        (is (= 0 (get-timestamp C1)))
+        (set-timestamp C1 2)
+        (is (= 2 (get-timestamp C1)))
+        (set-timestamp C1 0)
+        (is (= 0 (get-timestamp C1))))
 
       (is (= start (current-place C1)))
       (is (not= end (current-place C1)))
@@ -80,12 +80,12 @@
         (is (= [] (retrieve-port C1 E2)))
 
         (do
-          (assign-port! C1 E1 {:time 0})
-          (is (= 1 (get-time C1)))
+          (assign-port! C1 E1 {:timestamp 0})
+          (is (= 1 (get-timestamp C1)))
 
           (fire! C1)
-          (assign-port! C1 E1 {:time 2})
-          (is (= 3 (get-time C1))))))))
+          (assign-port! C1 E1 {:timestamp 2})
+          (is (= 3 (get-timestamp C1))))))))
 
 (deftest all-in-one-tests-with-vars
   (let [start (create-place "start")
@@ -108,16 +108,16 @@
              {:x 1 :y 2})]
     (testing "all-in-one test with vars of atomic component"
       (do
-        (is (= 0 (get-time C1)))
-        (set-time C1 2)
-        (is (= 2 (get-time C1)))
-        (set-time C1 0)
-        (is (= 0 (get-time C1))))
+        (is (= 0 (get-timestamp C1)))
+        (set-timestamp C1 2)
+        (is (= 2 (get-timestamp C1)))
+        (set-timestamp C1 0)
+        (is (= 0 (get-timestamp C1))))
 
       (do
         (is (not= [] (retrieve-port C1 E1)))
         (is (= [] (retrieve-port I2)))
-        (is (= [{:value {:ctrl 1} :time 0}] (retrieve-port E1)))
+        (is (= [{:value {:ctrl 1} :timestamp 0}] (retrieve-port E1)))
         (is (= [] (retrieve-port C1 E2))))
       (do
         (is (= 1 (get-variable C1 :x )))
@@ -163,10 +163,10 @@
         (is (= [] (retrieve-port C1 E2)))
 
         (do
-          (assign-port! C1 E1 {:time 0})
-          (is (= 1 (get-time C1)))
+          (assign-port! C1 E1 {:timestamp 0})
+          (is (= 1 (get-timestamp C1)))
 
           (fire! C1)
-          (assign-port! C1 E1 {:value {:ctrl 3} :time 2})
-          (is (= 3 (get-time C1)))
+          (assign-port! C1 E1 {:value {:ctrl 3} :timestamp 2})
+          (is (= 3 (get-timestamp C1)))
           (is (= 3 (get-variable C1 :x ))))))))

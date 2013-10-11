@@ -61,26 +61,26 @@
       (is (enable? G2 PG))
       (is (not= [] (retrieve-port G2 PG)))
       (do
-        (assign-port! C1 E1 {:time 1})
-        (is (= 1 (get-time C1)))
+        (assign-port! C1 E1 {:timestamp 1})
+        (is (= 1 (get-timestamp C1)))
         (is (enable? C1))
         (fire! C1)
         (is (enable? C1))
         (is (enable? C1 E1))
-        (set-time C1 0))
+        (set-timestamp C1 0))
       (do
-        (assign-port! C2 R1 {:time 2})
+        (assign-port! C2 R1 {:timestamp 2})
         (is (enable? C2))
         (fire! C2)
         (is (enable? C2 R1))
-        (is (= 2 (get-time C2)))
-        (set-time C2 0))
+        (is (= 2 (get-timestamp C2)))
+        (set-timestamp C2 0))
       (do
         (fire! G1)
         (is (enable? C1))
         (is (enable? C2))
-        (is (= 1 (get-time C1)))
-        (is (= 1 (get-time C2))))
+        (is (= 1 (get-timestamp C1)))
+        (is (= 1 (get-timestamp C2))))
       (do
         (fire! C1)
         (fire! C2)
@@ -88,11 +88,11 @@
         (is (enable? G2 PG)))
 
       (do
-        (assign-port! G2 PG {:time 0})
+        (assign-port! G2 PG {:timestamp 0})
         (is (enable? C1))
         (is (enable? C2))
-        (is (= 1 (get-time C1)))
-        (is (= 1 (get-time C2))))
+        (is (= 1 (get-timestamp C1)))
+        (is (= 1 (get-timestamp C2))))
       (do
         (fire! C1)
         (fire! C2)
@@ -169,16 +169,16 @@
       (is (enable? C2 R1))
       (is (enable? G1))
       (is (enable? G2 PG))
-      (is (= [{:time 0 :value {:r1-x 2}}] (retrieve-port C2 R1)))
+      (is (= [{:timestamp 0 :value {:r1-x 2}}] (retrieve-port C2 R1)))
 
       (do
         (assign-port! C1 E1
                          (create-token
                            {}
                            1))
-        (is (= 1 (get-time C1)))
+        (is (= 1 (get-timestamp C1)))
         (is (enable? C1))
-        (set-time C1 0)
+        (set-timestamp C1 0)
         (fire! C1)
         (is (enable? C1))
         (is (enable? C1 E1)))
@@ -189,21 +189,21 @@
                            {}
                            2))
         (is (enable? C2))
-        (is (= 2 (get-time C2)))
-        (set-time C2 0)
+        (is (= 2 (get-timestamp C2)))
+        (set-timestamp C2 0)
         (fire! C2)
         (is (enable? C2 R1)))
 
 
       (do
-        (is (= 0 (get-time C1)))
-        (is (= 0 (get-time C2)))
+        (is (= 0 (get-timestamp C1)))
+        (is (= 0 (get-timestamp C2)))
         (is (= 1 (get-variable C1 :x )))
         (is (= 2 (get-variable C2 :x )))
 
-        (is (= [{:value {:e1-x 1} :time 0}]
+        (is (= [{:value {:e1-x 1} :timestamp 0}]
               (retrieve-port C1 E1)))
-        (is (= [{:value {:r1-x 2} :time 0}]
+        (is (= [{:value {:r1-x 2} :timestamp 0}]
               (retrieve-port C2 R1)))
 
         (is (= true (enable? G1)))
@@ -211,13 +211,13 @@
         (is (= 3 (get-variable C1 :x )))
         (is (enable? C1))
         (is (enable? C2))
-        (is (= 1 (get-time C1)))
-        (is (= 1 (get-time C2))))
+        (is (= 1 (get-timestamp C1)))
+        (is (= 1 (get-timestamp C2))))
 
 
       (do
-        (set-time C1 0)
-        (set-time C2 0)
+        (set-timestamp C1 0)
+        (set-timestamp C2 0)
         (set-variable C1 :x 1)
         (set-variable C2 :x 2)
         (fire! C1)
@@ -240,8 +240,8 @@
             0))
         (is (enable? C1))
         (is (enable? C2))
-        (is (= 1 (get-time C1)))
-        (is (= 1 (get-time C2))))
+        (is (= 1 (get-timestamp C1)))
+        (is (= 1 (get-timestamp C2))))
       (do
         (fire! C1)
         (fire! C2)

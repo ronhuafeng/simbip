@@ -4,8 +4,8 @@
 
 
 (defn create-token
-  [value time]
-   {:time time :value value})
+  [value timestamp]
+   {:timestamp timestamp :value value})
 
 (defrecord Place
   [type name active?])
@@ -28,6 +28,17 @@
     (deref (:active? this)))
 
   Accessible
+  (get-snapshot
+    [this]
+    { :active? (deref (:active? this))})
+  (restore-snapshot!
+    [this snapshot]
+    (let [{:keys [active?]} snapshot]
+      (do
+        (reset!
+          (:active? this)
+          active?))))
+
   (clear! [this]
     (compare-and-set! (:active? this)
       (deref (:active? this))
@@ -111,6 +122,18 @@
 (extend-type Port
 
   Accessible
+  (get-snapshot
+    [this]
+    { :tokens (deref (:tokens this))})
+  (restore-snapshot!
+    [this snapshot]
+    (let [{:keys [tokens]} snapshot]
+      (do
+        (println (:name this) ": tokens -> " tokens)
+        (reset!
+          (:tokens this)
+          tokens))))
+
   (add-token!
     [port token]
     (swap! (:tokens port)
@@ -149,7 +172,7 @@
          0)))))
 
 (defrecord Transition
-  [type name source target port time guard? action!])
+  [type name source target port timestamp guard? action!])
 
 (defn create-transition
   ([name source target port]
@@ -162,17 +185,17 @@
      (build-AST "true;") ;; guard
      (build-AST "") ;; action
      ))
-  ([name source target port time]
+  ([name source target port timestamp]
    (->Transition 'Transition
      name
      source
      target
      port
-     time
+     timestamp
      (build-AST "true;") ;; guard
      (build-AST "") ;; action
      ))
-  ([name source target port time guard-string action-string]
+  ([name source target port timestamp guard-string action-string]
     (let [ action! (build-AST action-string)
            guard? (build-AST (str guard-string ";"))]
       (->Transition 'Transition
@@ -180,7 +203,7 @@
         source
         target
         port
-        time
+        timestamp
         guard? ;; guard
         action! ;; action
         ))))
@@ -207,7 +230,7 @@
 (defrecord Atomic
   [type name
    ports places transitions
-   time
+   timestamp
    variables
    environment])
 ;; variable: {:x v-x :y v-y}
@@ -237,14 +260,14 @@
           (value-through-port
             (deref (:variables component))
             (:port t))
-          (get-time component))))))
+          (get-timestamp component))))))
 (defn- clear-port-tokens
   [component]
   (doseq [t (current-transitions component)]
     (clear! (:port t))))
 
 (defn create-atomic
-  ([name ports places init transitions time]
+  ([name ports places init transitions timestamp]
    (let [ var-map (atom {})
           environment (set-environment var-map)
           c (->Atomic 'Atomic
@@ -252,7 +275,7 @@
               ports
               places
               transitions
-              (atom time)
+              (atom timestamp)
               var-map
               environment)]
      (do
@@ -264,7 +287,7 @@
        (add-port-tokens c))
 
      c))
-  ([name ports places init transitions time variables]
+  ([name ports places init transitions timestamp variables]
    (let [ var-map (atom variables)
           environment (set-environment var-map)
           c (->Atomic 'Atomic
@@ -272,7 +295,7 @@
               ports
               places
               transitions
-              (atom time)
+              (atom timestamp)
               var-map
               environment)]
      (do
@@ -314,12 +337,12 @@
     (let [trans (get-trans-interface (:environment component))]
       (exec-ast trans (:action! t)))
 
-    ;;some time stuff
-    (set-time
+    ;;some timestamp stuff
+    (set-timestamp
       component
       (+
-        (:time t)
-        (get-time component)))
+        (:timestamp t)
+        (get-timestamp component)))
 
     (enable! (:target t))
 
@@ -357,19 +380,58 @@
       (fire-transition this t)))
 
   Accessible
-  (get-time
+  (get-snapshot
+    [this]
+    { :ports (apply
+               merge
+               (map
+                 (fn [p]
+                   {(:name p) (get-snapshot p)})
+                 (:ports this)))
+      :places (apply
+                merge
+                (map
+                  (fn [p]
+                    {(:name p) (get-snapshot p)})
+                  (:places this)))
+      :variables (deref (:variables this))
+      :timestamp (deref (:timestamp this))})
+  (restore-snapshot!
+    [this snapshot]
+    (let [{:keys [ports places variables timestamp]} snapshot]
+      (do
+        ;; restore ports
+        (doseq [p (:ports this)]
+          (restore-snapshot!
+            p
+            (get ports (:name p))))
+        ;; restore places
+        (doseq [p (:places this)]
+          (restore-snapshot!
+            p
+            (get places (:name p))))
+        ;; restore variables
+        (reset!
+          (:variables this)
+          variables)
+        ;; restore timestamp
+        (reset!
+          (:timestamp this)
+          timestamp))))
+
+  (get-timestamp
     ([this]
-     (deref (:time this)))
+     (deref (:timestamp this)))
     ([this port]
-     (get-time this)))
-  (set-time
+     (get-timestamp this)))
+  (set-timestamp
     ([this new-value]
      (compare-and-set!
-       (:time this)
-       (get-time this)
+       (:timestamp this)
+       (get-timestamp this)
        new-value))
     ([this port new-value]
-     (set-time this new-value)))
+     (set-timestamp this new-value)))
 
   (get-variable
     ([this attr]
@@ -408,9 +470,9 @@
               (first tl)
               (throw (Exception. (str "Enabled transition is not equal to 1, actually " (count tl)))))]
       (do
-        (if (nil? (:time token))
+        (if (nil? (:timestamp token))
           ()
-          (set-time this (:time token)))
+          (set-timestamp this (:timestamp token)))
 
       ;; 如果 token 中的 key 是 port 的 var-list 中的 val 中的值，说明这个变量是被 port 映射出来的
       ;; 在外面的名字是 var-list 中 key 对应的 val 的值
@@ -442,13 +504,13 @@
 (defrecord Interaction
   [type name
    port connections ;; connection {:component :port}
-   time action variables environment var-list])  ;; var-list， 类似于在 port 中的作用，完成参数代换
+   timestamp action variables environment var-list])  ;; var-list， 类似于在 port 中的作用，完成参数代换
 
 
 
 
 (defn create-interaction
-  ([^String name port connections ^Integer time]
+  ([^String name port connections ^Integer timestamp]
     (let [var-map (atom {})
           environment (set-environment var-map)
           up-action (build-AST "")
@@ -458,7 +520,7 @@
         name
         port
         connections
-        time
+        timestamp
         { :up-action up-action
           :down-action down-action
           :guard-action guard-action}
@@ -466,7 +528,7 @@
         environment
         {} ;; var list
         )))
-  ([name port connections time action-string-map var-list]
+  ([name port connections timestamp action-string-map var-list]
     (let [ var-map (atom {})
            environment (set-environment var-map)
            up-action (build-AST (:up-action action-string-map))
@@ -485,7 +547,7 @@
         name
         port
         connections
-        time
+        timestamp
         { :up-action up-action
           :down-action down-action
           :guard-action guard-action}
@@ -537,7 +599,7 @@
       (:environment interaction))))
 
 (defn- do-down-action!
-  [interaction time]
+  [interaction timestamp]
   ;; 给每个 connection 中的 port 和 component 构造一个 正确的 token，然后通过 assign-port!
   ;; 过程触发下面的 fire! 过程。
   (let [ ports-env (atom {})
@@ -560,9 +622,9 @@
           (:component conn)
           (:port conn)
           ;; 最最关键的构造 token 的过程
-          {:time (+
-                   (:time interaction)
-                   time)
+          {:timestamp (+
+                   (:timestamp interaction)
+                   timestamp)
            :value (project-value
                     (deref ports-env)
                     (vals (:var-list (:port conn))))})))))
@@ -578,7 +640,7 @@
       (:variables this)
       (:value token))
 
-    (do-down-action! this (:time token))))
+    (do-down-action! this (:timestamp token))))
 
 (extend-type Interaction
 
@@ -612,13 +674,13 @@
 
   Accessible
 
-  (get-time
+  (get-timestamp
     ([this]
      (apply max
-       (map #(get-time (:component %) (:port %))
+       (map #(get-timestamp (:component %) (:port %))
          (:connections this))))
     ([this port]
-     (get-time this)))
+     (get-timestamp this)))
 
   (get-variable
     [this index attr]
@@ -638,7 +700,7 @@
              (deref (:variables this))
              port)
            )
-         (get-time this))]
+         (get-timestamp this))]
       []))
   #_("assign-port! : Get a token from export, means the interaction is
       involved in a larger interaction outside. We assume every interaction
@@ -653,7 +715,7 @@
       (fire-interaction!
         this
         { :value assigned-value
-          :time (:time token)})))
+          :timestamp (:timestamp token)})))
 
   Fireable
 
@@ -663,7 +725,7 @@
       this
       (create-token
         {}
-        (get-time this))))
+        (get-timestamp this))))
   )
 
 
@@ -819,6 +881,29 @@
        false)))
 
   Accessible
+  (get-snapshot
+    [this]
+    { :subcomponents (apply
+                       merge
+                       (map
+                         (fn [c]
+                           {(:name c) (get-snapshot c)})
+                         (filter
+                           #(not= 'Interaction
+                              (:type %))
+                           (:subcomponents this))))})
+  (restore-snapshot!
+    [this snapshot]
+    (let [{:keys [subcomponents]} snapshot]
+      (do
+        ;; restore sub components
+        (doseq [c (filter
+                    #(not= 'Interaction
+                       (:type %))
+                    (:subcomponents this))]
+          (restore-snapshot!
+            c
+            (get subcomponents (:name c)))))))
 
   (get-variable
     [this port attr]
@@ -836,7 +921,7 @@
         (:source export)
         {
          :value assigned-value
-         :time (:time token)
+         :timestamp (:timestamp token)
           })))
   (retrieve-port
     [this port]
@@ -845,34 +930,34 @@
                        (:source-component export)
                        (:source export))
           inner-t (first inner-port)]
-      [{ :time (:time inner-t)
+      [{ :timestamp (:timestamp inner-t)
          :value (value-through-port
                           (:value inner-t)
                           port)}]))
 
-  (get-time
+  (get-timestamp
     ([this]
      (apply min
-       (map get-time
+       (map get-timestamp
          (filter enable?
            (:subcomponents this)))))
     ([this port]
      (let [e (get-export this port)]
-       (get-time (:source-component e) (:source e)))))
+       (get-timestamp (:source-component e) (:source e)))))
 
-  (set-time
+  (set-timestamp
     ([this port new-value]
      (let [e (get-export this port)]
-       (set-time (:source-component e) (:source e)))))
+       (set-timestamp (:source-component e) (:source e)))))
 
   (top-priority
     [this rules selections]
     {:pre [(pos? (count selections))
            "The count of enabled components is more than one."]}
-    (let [min-time (apply min
-                     (map get-time selections))]
+    (let [min-timestamp (apply min
+                     (map get-timestamp selections))]
       (rand-nth (filter
-                  #(= min-time (get-time %))
+                  #(= min-timestamp (get-timestamp %))
                   selections))))
 
   Fireable

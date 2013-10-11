@@ -14,10 +14,10 @@
     [this])
   (top-priority
     [this rules selections])
-  (get-time
+  (get-timestamp
     [this]
     [this port])
-  (set-time
+  (set-timestamp
     [this new-value]
     [this port new-value])
 
@@ -27,7 +27,11 @@
     )
   (set-variable
     [this attr new-value]
-    [this port attr new-value]))
+    [this port attr new-value])
+  (get-snapshot
+    [this])
+  (restore-snapshot!
+    [this snapshot]))
 
 
 
