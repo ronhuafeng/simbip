@@ -528,8 +528,8 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 			node.put("value", ctx.op.getText());
 			List<Map<String, Object>> argList = new ArrayList<Map<String, Object>>();
 
-
 			argList.add(visitPostfix_expression(ctx.postfix_expression()));
+			node.put("arg-list", argList);
 		}
 		else
 		{

@@ -468,7 +468,14 @@
                (:transitions this))
           t (if (= 1 (count tl))
               (first tl)
-              (throw (Exception. (str "Enabled transition is not equal to 1, actually " (count tl)))))]
+              (throw (Exception. (str
+                                   "Enabled transition is not equal to 1, actually "
+                                   (count tl)
+                                   ", port is: " (:name port) ""
+                                   ", \n and transitions are: \n"
+                                   (apply str
+                                     (map #(str (:name %) ", ")
+                                       tl))))))]
       (do
         (if (nil? (:timestamp token))
           ()
