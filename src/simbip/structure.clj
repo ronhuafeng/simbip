@@ -471,6 +471,7 @@
               (throw (Exception. (str
                                    "Enabled transition is not equal to 1, actually "
                                    (count tl)
+                                   ", component is: " (:name this) ""
                                    ", port is: " (:name port) ""
                                    ", \n and transitions are: \n"
                                    (apply str
