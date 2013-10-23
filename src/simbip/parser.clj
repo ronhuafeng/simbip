@@ -110,7 +110,7 @@
       (apply max vl))
     "randomSelect"
     (fn [& vl]
-      (apply rand-nth vl))))
+      (rand-nth vl))))
 
 (defn get-trans-interface
   [env]
