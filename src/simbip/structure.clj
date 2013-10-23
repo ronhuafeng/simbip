@@ -172,7 +172,7 @@
          0)))))
 
 (defrecord Transition
-  [type name source target port timestamp guard? action!])
+  [type name source target port timestamp guard? action! atomic-parent])
 
 (defn create-transition
   ([name source target port]
@@ -184,7 +184,7 @@
      0
      (build-AST "true;") ;; guard
      (build-AST "") ;; action
-     ))
+     (atom nil)))
   ([name source target port timestamp]
    (->Transition 'Transition
      name
@@ -194,7 +194,7 @@
      timestamp
      (build-AST "true;") ;; guard
      (build-AST "") ;; action
-     ))
+     (atom nil)))
   ([name source target port timestamp guard-string action-string]
     (let [ action! (build-AST action-string)
            guard? (build-AST (str guard-string ";"))]
@@ -206,18 +206,9 @@
         timestamp
         guard? ;; guard
         action! ;; action
-        ))))
+        (atom nil)))))
 
-(extend-type Transition
-  Queryable
 
-  (enable? [this place port]
-    (if (and
-          (equal-name? place (:source this))
-          (equal-name? port (:port this)))
-      true
-      false))
-  )
 
 
 
@@ -282,6 +273,9 @@
        (doseq [s (:places c)]
          (clear! s))
 
+       (doseq [t (:transitions c)]
+         (reset! (:atomic-parent t) c))
+
        (enable! init)
 
        (add-port-tokens c))
@@ -301,6 +295,9 @@
      (do
        (doseq [s (:places c)]
          (clear! s))
+
+       (doseq [t (:transitions c)]
+         (reset! (:atomic-parent t) c))
 
        (enable! init)
 
@@ -347,6 +344,25 @@
     (enable! (:target t))
 
     (add-port-tokens component)))
+
+
+(extend-type Transition
+  Queryable
+
+  (enable? [this place port]
+    (if (and
+          (equal-name? place (:source this))
+          (equal-name? port (:port this)))
+      true
+      false))
+  Fireable
+  (fire!
+    [this]
+    {:pre [(not (nil? @(:atomic-parent this)))]}
+    (fire-transition
+      @(:atomic-parent this)
+      this))
+  )
 
 (extend-type Atomic
   Queryable

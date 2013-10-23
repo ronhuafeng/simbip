@@ -107,7 +107,10 @@
   (case fun
     "max"
     (fn [& vl]
-      (apply max vl))))
+      (apply max vl))
+    "randomSelect"
+    (fn [& vl]
+      (apply rand-nth vl))))
 
 (defn get-trans-interface
   [env]

@@ -88,7 +88,7 @@
                        clojure.lang.PersistentVector]
              ^:static [allSubComponents [simbip.structure.Atomic]
                        clojure.lang.PersistentVector]
-             ^:static [allEnabledSubComponents [simbip.structure.Compound]
+             ^:static [allEnabledSubComponents [Object]
                        clojure.lang.PersistentVector]
              ^:static [currentPlace [simbip.structure.Atomic]
                        simbip.structure.Place]
@@ -124,9 +124,14 @@
   (make-priority low high guard-string))
 
 (defn -allEnabledSubComponents
-  [compound]
-  (apply vector
-    (enabled-subcomponents compound)))
+  [component]
+  (case (:type component)
+    Compound
+    (apply vector
+      (enabled-subcomponents component))
+    Atomic
+    (apply vector
+      (enabled-internal-transitions component))))
 
 (defn -fire
   [component]
