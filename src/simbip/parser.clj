@@ -32,7 +32,7 @@
                        "Identifier"
                        (list
                          {:type "VAR" :name (get node "value")})
-                       ("Integer", "Boolean")
+                       ("Integer", "Boolean", "String")
                        (list
                          {:type "NUM" :value (get node "value")})))]
     (builder ast)))
@@ -108,6 +108,11 @@
     "max"
     (fn [& vl]
       (apply max vl))
+    "printf"
+    (fn [& vl]
+      (do
+        (apply printf vl)
+        (println)))
     "randomSelect"
     (fn [& vl]
       (rand-nth vl))

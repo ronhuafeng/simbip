@@ -2,25 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprBaseListener.java" afterPath="$PROJECT_DIR$/src/ast/ExprBaseListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprBaseVisitor.java" afterPath="$PROJECT_DIR$/src/ast/ExprBaseVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprLexer.java" afterPath="$PROJECT_DIR$/src/ast/ExprLexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprListener.java" afterPath="$PROJECT_DIR$/src/ast/ExprListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprParser.java" afterPath="$PROJECT_DIR$/src/ast/ExprParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprVisitor.java" afterPath="$PROJECT_DIR$/src/ast/ExprVisitor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/parser.clj" afterPath="$PROJECT_DIR$/src/simbip/parser.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simbip.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383654269017" ignored="false" />
+    <file path="/Dummy.txt" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383657301158" ignored="false" />
     <file path="/structure.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382495869658" ignored="false" />
-    <file path="/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383656825748" ignored="false" />
-    <file path="/Clojure REPL" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382498456840" ignored="false" />
+    <file path="/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383659059250" ignored="false" />
+    <file path="/Clojure REPL" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658954457" ignored="false" />
     <file path="/constructor.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382600740797" ignored="false" />
     <file path="/priority_test.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1380987820925" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBuildTree.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381806337806" ignored="false" />
-    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprVisitor.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
-    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprParser.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
-    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprLexer.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
+    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprVisitor.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658680702" ignored="false" />
+    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprParser.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658680702" ignored="false" />
+    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprLexer.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658680702" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/Expr.g4" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
-    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprListener.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
-    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBaseListener.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
-    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBaseVisitor.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
+    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprListener.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658680702" ignored="false" />
+    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBaseListener.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658680702" ignored="false" />
+    <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBaseVisitor.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658680702" ignored="false" />
     <file path="/ExprBuildTree.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381806334498" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/resource/expr.bip" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382104239202" ignored="false" />
     <file path="/expr.bip" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382102798494" ignored="false" />
@@ -93,46 +99,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="structure.clj" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="parser.clj" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="20" selection-start="3858" selection-end="3858" vertical-scroll-proportion="0.45975232">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="project.clj" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project.clj">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="77" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="constructor.clj" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="25" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="protocol.clj" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/simbip/protocol.clj">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="10" selection-start="634" selection-end="657" vertical-scroll-proportion="0.0">
+            <state line="113" column="46" selection-start="3000" selection-end="3000" vertical-scroll-proportion="0.033950616">
               <folding />
             </state>
           </provider>
@@ -165,6 +135,7 @@
         <option value="$PROJECT_DIR$/src/ast/ExprBuildTree.java" />
         <option value="$PROJECT_DIR$/src/simbip/structure.clj" />
         <option value="$PROJECT_DIR$/src/simbip/constructor.clj" />
+        <option value="$PROJECT_DIR$/src/ast/ExprVisitor.java" />
         <option value="$PROJECT_DIR$/src/simbip/parser.clj" />
       </list>
     </option>
@@ -541,7 +512,11 @@
       <created>1382515568777</created>
       <updated>1382515568777</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix some bugs">
+      <created>1383656863450</created>
+      <updated>1383656863450</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -551,7 +526,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299389" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.190625" sideWeight="0.73231775" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.190625" sideWeight="0.73449403" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -559,12 +534,13 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297062" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297062" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17916666" sideWeight="0.7845484" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1875" sideWeight="0.73231775" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26768225" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1875" sideWeight="0.73449403" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.265506" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -572,7 +548,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297062" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -618,7 +593,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正了随机函数。" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix some bugs" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -643,6 +618,7 @@
     <MESSAGE value="Add some exception hints." />
     <MESSAGE value="增加了 transition  选择的支持；" />
     <MESSAGE value="修正了随机函数。" />
+    <MESSAGE value="fix some bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -665,11 +641,6 @@
     <entry file="file://$PROJECT_DIR$/test/simbip/structures/priority_test.clj">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="28" selection-start="558" selection-end="558" vertical-scroll-proportion="0.579795" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ast/ExprLexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="516" selection-end="516" vertical-scroll-proportion="0.2085308" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ast/ExprWalker.java">
@@ -716,30 +687,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
+    <entry file="file://$PROJECT_DIR$/src/ast/ExprVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="25" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+        <state line="25" column="43" selection-start="879" selection-end="879" vertical-scroll-proportion="0.77469134">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/project.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="77" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
+        <state line="7" column="77" selection-start="302" selection-end="302" vertical-scroll-proportion="0.23765433">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="25" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.038194444">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.0">
+        <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.89643466">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="20" selection-start="3858" selection-end="3858" vertical-scroll-proportion="0.45975232">
+        <state line="113" column="46" selection-start="3000" selection-end="3000" vertical-scroll-proportion="0.033950616">
           <folding />
         </state>
       </provider>
