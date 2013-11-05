@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" name="Default" comment="修正了随机函数。">
+    <list default="true" id="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/parser.clj" afterPath="$PROJECT_DIR$/src/simbip/parser.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simbip.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382515525752" ignored="false" />
+    <file path="/Dummy.txt" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383654269017" ignored="false" />
     <file path="/structure.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382495869658" ignored="false" />
-    <file path="/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382498480730" ignored="false" />
+    <file path="/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383656825748" ignored="false" />
     <file path="/Clojure REPL" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382498456840" ignored="false" />
-    <file path="/constructor.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382497804305" ignored="false" />
+    <file path="/constructor.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382600740797" ignored="false" />
     <file path="/priority_test.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1380987820925" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBuildTree.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381806337806" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprVisitor.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381236797709" ignored="false" />
@@ -28,6 +28,11 @@
     <file path="/protocol.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381455982621" ignored="false" />
     <file path="/Compound_test.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381465548902" ignored="false" />
     <file path="/fragment.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381806437244" ignored="false" />
+    <file path="$PROJECT_DIR$/../simsync/src/simsync/core.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382599723836" ignored="false" />
+    <file path="/core.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382599722203" ignored="false" />
+    <file path="$PROJECT_DIR$/../simsync/src/simsync/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382598905605" ignored="false" />
+    <file path="$PROJECT_DIR$/../simsync/src/simsync/constructor.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382600757903" ignored="false" />
+    <file path="$PROJECT_DIR$/../simsync/project.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382600929547" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +96,7 @@
       <file leaf-file-name="structure.clj" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="773" column="1" selection-start="18317" selection-end="18318" vertical-scroll-proportion="-8.68">
+            <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -100,7 +105,16 @@
       <file leaf-file-name="parser.clj" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="7" selection-start="2968" selection-end="2968" vertical-scroll-proportion="0.7608069">
+            <state line="145" column="20" selection-start="3858" selection-end="3858" vertical-scroll-proportion="0.45975232">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project.clj" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project.clj">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="77" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -109,7 +123,7 @@
       <file leaf-file-name="constructor.clj" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="54" selection-start="6851" selection-end="6851" vertical-scroll-proportion="0.0">
+            <state line="17" column="25" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -189,6 +203,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -299,8 +315,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -523,7 +537,11 @@
       <created>1382498764395</created>
       <updated>1382498764395</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="修正了随机函数。">
+      <created>1382515568777</created>
+      <updated>1382515568777</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -533,7 +551,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299389" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Leiningen" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.159375" sideWeight="0.7845484" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.190625" sideWeight="0.73231775" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -545,8 +563,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17916666" sideWeight="0.7845484" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15677084" sideWeight="0.7845484" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21545158" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1875" sideWeight="0.73231775" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26768225" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -634,11 +652,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/simbip/core.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
       <provider selected="true" editor-type-id="text-editor">
         <state line="137" column="52" selection-start="6614" selection-end="6614" vertical-scroll-proportion="0.0" />
@@ -696,20 +709,6 @@
         <state line="143" column="0" selection-start="4557" selection-end="4557" vertical-scroll-proportion="0.33285302" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="773" column="1" selection-start="18317" selection-end="18318" vertical-scroll-proportion="-8.68">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="54" selection-start="6851" selection-end="6851" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/protocol.clj">
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="10" selection-start="634" selection-end="657" vertical-scroll-proportion="0.0">
@@ -717,9 +716,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="25" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="77" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="7" selection-start="2968" selection-end="2968" vertical-scroll-proportion="0.7608069">
+        <state line="145" column="20" selection-start="3858" selection-end="3858" vertical-scroll-proportion="0.45975232">
           <folding />
         </state>
       </provider>

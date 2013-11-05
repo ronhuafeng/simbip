@@ -110,7 +110,15 @@
       (apply max vl))
     "randomSelect"
     (fn [& vl]
-      (rand-nth vl))))
+      (rand-nth vl))
+    "randnth"
+    (fn [v-list]
+      (rand-nth v-list))
+    "range"
+    (fn [start end]
+      {:pre [(integer? start)
+             (integer? end)]}
+      (range start end))))
 
 (defn get-trans-interface
   [env]
@@ -135,7 +143,7 @@
             { :operate
               (fn [& args]
                 (do
-                  (println v " applys to " args )
+                  #_(println v " applys to " args )
                   {:value
                    (apply op
                      (map
