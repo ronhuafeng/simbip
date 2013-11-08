@@ -1,4 +1,4 @@
-// Generated from C:\Users\»ª·ã\Desktop\Expr.g4 by ANTLR 4.1
+// Generated from G:\Tsmart Projects\ParseBIP\src\ast\Expr.g4 by ANTLR 4.1
 package ast;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -95,6 +95,17 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatement(@NotNull ExprParser.StatementContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link ExprParser#if_then_else_expression_compatible}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ExprParser#if_then_else_expression_compatible}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link ExprParser#logical_and_expression}.

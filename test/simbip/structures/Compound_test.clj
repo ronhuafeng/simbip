@@ -167,7 +167,7 @@
               {:component c2 :port P2}]
              2
              {
-              :up-action    "x1=dev.x;x2=ctrl.x;"
+              :up-action    "if (true) { x1=dev.x;x2=ctrl.x; }"
               :down-action  "if (true) then dev.x=x1+x2;ctrl.x=x1+x2; fi"
               :guard-action "true;"
                }

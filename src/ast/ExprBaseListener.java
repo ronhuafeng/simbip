@@ -1,4 +1,4 @@
-// Generated from C:\Users\»ª·ã\Desktop\Expr.g4 by ANTLR 4.1
+// Generated from G:\Tsmart Projects\ParseBIP\src\ast\Expr.g4 by ANTLR 4.1
 package ast;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -115,6 +115,19 @@ public class ExprBaseListener implements ExprListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitStatement(@NotNull ExprParser.StatementContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

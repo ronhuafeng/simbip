@@ -222,6 +222,10 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 		{
 			node = visitIf_then_else_expression(ctx.if_then_else_expression());
 		}
+		else if (ctx.if_then_else_expression_compatible() != null)
+		{
+			node = visitIf_then_else_expression_compatible(ctx.if_then_else_expression_compatible());
+		}
 		else
 		{
 			node = null;
@@ -229,6 +233,58 @@ public class ExprBuildTree implements ExprVisitor<Map<String, Object>> {
 
 
 		return node;  //To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * Visit a parse tree produced by {@link ast.ExprParser#if_then_else_expression_compatible}.
+	 *
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	@Override
+	public Map<String, Object> visitIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx) {
+		List<Map<String, Object>> argList = new ArrayList<Map<String, Object>>();
+
+		// condition
+		argList.add(visitLogical_or_expression(ctx.logical_or_expression()));
+
+		// then
+		List<Map<String, Object>> thenStmtList = new ArrayList<Map<String, Object>>();
+
+		for (ExprParser.StatementContext e: ctx.then_stmts)
+		{
+			thenStmtList.add(visitStatement(e));
+		}
+
+		Map<String, Object> thenClause = new HashMap<String, Object>();
+
+		thenClause.put("tag", "Keyword");
+		thenClause.put("value", "do");
+		thenClause.put("arg-list", thenStmtList);
+
+		// else
+		List<Map<String, Object>> elseStmtList = new ArrayList<Map<String, Object>>();
+
+		for (ExprParser.StatementContext e: ctx.else_stmts)
+		{
+			elseStmtList.add(visitStatement(e));
+		}
+
+		Map<String, Object> elseClause = new HashMap<String, Object>();
+		elseClause.put("tag", "Keyword");
+		elseClause.put("value", "do");
+		elseClause.put("arg-list", elseStmtList);
+
+		argList.add(thenClause);
+		argList.add(elseClause);
+
+		Map<String, Object> node = new HashMap<String, Object>();
+
+		node.put("tag", "Keyword");
+		node.put("value", "if");
+		node.put("arg-list", argList);
+
+		return node;   //To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	/**

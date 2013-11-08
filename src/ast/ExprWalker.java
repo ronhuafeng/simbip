@@ -125,6 +125,26 @@ public class ExprWalker extends ExprBaseListener {
 		super.exitStatement(ctx);    //To change body of overridden methods use File | Settings | File Templates.
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void enterIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx) {
+		super.enterIf_then_else_expression_compatible(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override
+	public void exitIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx) {
+		super.exitIf_then_else_expression_compatible(ctx);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
 
 	@Override
 	public void enterLogical_and_expression(@NotNull ExprParser.Logical_and_expressionContext ctx) {

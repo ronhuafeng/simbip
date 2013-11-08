@@ -1,4 +1,4 @@
-// Generated from C:\Users\»ª·ã\Desktop\Expr.g4 by ANTLR 4.1
+// Generated from G:\Tsmart Projects\ParseBIP\src\ast\Expr.g4 by ANTLR 4.1
 package ast;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -66,6 +66,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatement(@NotNull ExprParser.StatementContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#if_then_else_expression_compatible}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link ExprParser#logical_and_expression}.

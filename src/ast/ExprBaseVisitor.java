@@ -1,4 +1,4 @@
-// Generated from C:\Users\»ª·ã\Desktop\Expr.g4 by ANTLR 4.1
+// Generated from G:\Tsmart Projects\ParseBIP\src\ast\Expr.g4 by ANTLR 4.1
 package ast;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -75,6 +75,14 @@ public class ExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements E
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitStatement(@NotNull ExprParser.StatementContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
+	@Override public T visitIf_then_else_expression_compatible(@NotNull ExprParser.If_then_else_expression_compatibleContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
