@@ -2,24 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/simbip/structures/Compound_test.clj" afterPath="$PROJECT_DIR$/test/simbip/structures/Compound_test.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprBaseListener.java" afterPath="$PROJECT_DIR$/src/ast/ExprBaseListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprBaseVisitor.java" afterPath="$PROJECT_DIR$/src/ast/ExprBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprBuildTree.java" afterPath="$PROJECT_DIR$/src/ast/ExprBuildTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprLexer.java" afterPath="$PROJECT_DIR$/src/ast/ExprLexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprListener.java" afterPath="$PROJECT_DIR$/src/ast/ExprListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprParser.java" afterPath="$PROJECT_DIR$/src/ast/ExprParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprVisitor.java" afterPath="$PROJECT_DIR$/src/ast/ExprVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ast/ExprWalker.java" afterPath="$PROJECT_DIR$/src/ast/ExprWalker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/constructor.clj" afterPath="$PROJECT_DIR$/src/simbip/constructor.clj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/simbip/parser.clj" afterPath="$PROJECT_DIR$/src/simbip/parser.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simbip.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383875346597" ignored="false" />
+    <file path="/Dummy.txt" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383900490252" ignored="false" />
     <file path="/structure.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382495869658" ignored="false" />
-    <file path="/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383659059250" ignored="false" />
-    <file path="/Clojure REPL" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383658954457" ignored="false" />
-    <file path="/constructor.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382600740797" ignored="false" />
+    <file path="/parser.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383917868552" ignored="false" />
+    <file path="/Clojure REPL" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383917702875" ignored="false" />
+    <file path="/constructor.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383917931196" ignored="false" />
     <file path="/priority_test.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1380987820925" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprBuildTree.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1381806337806" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprVisitor.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383875286055" ignored="false" />
@@ -43,6 +36,8 @@
     <file path="$PROJECT_DIR$/../simsync/project.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1382600929547" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/ExprLexer.tokens" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383875286055" ignored="false" />
     <file path="$PROJECT_DIR$/../ParseBIP/src/ast/Expr.tokens" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383875286055" ignored="false" />
+    <file path="/generator.clj" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383896629049" ignored="false" />
+    <file path="/Expr.java" changelist="41192fd9-7d7c-42e1-bf6f-5b4fca15f024" time="1383899971846" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,16 +101,25 @@
       <file leaf-file-name="parser.clj" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="45" selection-start="3277" selection-end="3277" vertical-scroll-proportion="0.0">
+            <state line="320" column="0" selection-start="8758" selection-end="8758" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Compound_test.clj" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/simbip/structures/Compound_test.clj">
+      <file leaf-file-name="constructor.clj" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="169" column="62" selection-start="4618" selection-end="4618" vertical-scroll-proportion="0.66049385">
+            <state line="231" column="28" selection-start="9402" selection-end="9402" vertical-scroll-proportion="0.93070865">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Expr.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ast/Expr.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="7" selection-start="180" selection-end="193" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -146,12 +150,14 @@
         <option value="$PROJECT_DIR$/test/simbip/structures/Interaction_test.clj" />
         <option value="$PROJECT_DIR$/src/ast/ExprBuildTree.java" />
         <option value="$PROJECT_DIR$/src/simbip/structure.clj" />
-        <option value="$PROJECT_DIR$/src/simbip/constructor.clj" />
         <option value="$PROJECT_DIR$/src/ast/ExprVisitor.java" />
-        <option value="$PROJECT_DIR$/src/simbip/parser.clj" />
         <option value="$PROJECT_DIR$/src/ast/ExprBaseListener.java" />
         <option value="$PROJECT_DIR$/test/simbip/structures/Compound_test.clj" />
         <option value="$PROJECT_DIR$/src/ast/ExprParser.java" />
+        <option value="$PROJECT_DIR$/src/simbip/generator.clj" />
+        <option value="$PROJECT_DIR$/src/ast/Expr.java" />
+        <option value="$PROJECT_DIR$/src/simbip/parser.clj" />
+        <option value="$PROJECT_DIR$/src/simbip/constructor.clj" />
       </list>
     </option>
   </component>
@@ -535,7 +541,15 @@
       <created>1383659150002</created>
       <updated>1383659150002</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="增加了c if 兼容语法">
+      <created>1383875564413</created>
+      <updated>1383875564413</updated>
+    </task>
+    <task id="LOCAL-00015" summary="增加了 getAST 接口">
+      <created>1383900501036</created>
+      <updated>1383900501036</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -545,6 +559,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299389" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.190625" sideWeight="0.73449403" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -566,7 +581,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -612,7 +626,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="add printf support&#10;parser add String-compatibility" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加了 getAST 接口" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -639,6 +653,8 @@
     <MESSAGE value="修正了随机函数。" />
     <MESSAGE value="fix some bugs" />
     <MESSAGE value="add printf support&#10;parser add String-compatibility" />
+    <MESSAGE value="增加了c if 兼容语法" />
+    <MESSAGE value="增加了 getAST 接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -648,11 +664,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/simbip/core.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/simbip/structures/priority_test.clj">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="28" selection-start="558" selection-end="558" vertical-scroll-proportion="0.579795" />
@@ -688,26 +699,9 @@
         <state line="7" column="77" selection-start="302" selection-end="302" vertical-scroll-proportion="0.23765433" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="25" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.038194444" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/simbip/structure.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.89643466" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ast/ExprBuildTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="13" selection-start="483" selection-end="483" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ast/Expr.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="162" selection-end="162" vertical-scroll-proportion="0.27160493">
+        <state line="796" column="69" selection-start="18650" selection-end="18650" vertical-scroll-proportion="0.89643466">
           <folding />
         </state>
       </provider>
@@ -715,13 +709,6 @@
     <entry file="file://$PROJECT_DIR$/src/ast/ExprBaseListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="15" selection-start="598" selection-end="598" vertical-scroll-proportion="0.51968503">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="45" selection-start="3277" selection-end="3277" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -735,7 +722,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/simbip/structures/Compound_test.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="62" selection-start="4618" selection-end="4618" vertical-scroll-proportion="0.66049385">
+        <state line="167" column="14" selection-start="4526" selection-end="4541" vertical-scroll-proportion="0.5925926">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ast/ExprBuildTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="454" column="11" selection-start="13105" selection-end="13125" vertical-scroll-proportion="0.23779528">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ast/Expr.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="7" selection-start="180" selection-end="193" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simbip/parser.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="320" column="0" selection-start="8758" selection-end="8758" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simbip/constructor.clj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="231" column="28" selection-start="9402" selection-end="9402" vertical-scroll-proportion="0.93070865">
           <folding />
         </state>
       </provider>

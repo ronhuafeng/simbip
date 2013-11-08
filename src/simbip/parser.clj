@@ -6,7 +6,7 @@
     (org.antlr.v4.runtime CommonTokenStream ANTLRInputStream)
     ))
 
-(defn build-AST
+(defn get-raw-AST
   [action-string]
   (let [ string-stream (ByteArrayInputStream. (.getBytes action-string))
          input (ANTLRInputStream. string-stream)
@@ -14,28 +14,37 @@
          tokens (CommonTokenStream. lexer)
          parser (ExprParser. tokens)
          ast (.visitDo_action (ExprBuildTree.)
-               (.do_action parser))
+               (.do_action parser))]
+    ast))
+(defn build-AST
+  [action-string]
+  (let [ raw-ast (get-raw-AST action-string)
          builder (fn rec-build [node]
                      (case (get node "tag")
                        "OP"
                        (cons
-                         {:type "OP" :name (get node "value")}
+                         {:type "OP"
+                          :name (get node "value")}
                          (map #(rec-build %) (get node "arg-list")))
                        ("Keyword", "keyword")
                        (cons
-                         {:type "Keyword" :name (get node "value")}
+                         {:type "Keyword"
+                          :name (get node "value")}
                          (map #(rec-build %) (get node "arg-list")))
                        ("FunctionCall")
                        (cons
-                         {:type "FunctionCall" :name (get node "value")}
+                         {:type "FunctionCall"
+                          :name (get node "value")}
                          (map #(rec-build %) (get node "arg-list")))
                        "Identifier"
                        (list
-                         {:type "VAR" :name (get node "value")})
+                         {:type "VAR"
+                          :name (get node "value")})
                        ("Integer", "Boolean", "String")
                        (list
-                         {:type "NUM" :value (get node "value")})))]
-    (builder ast)))
+                         {:type "VALUE"
+                          :value (get node "value")})))]
+    (builder raw-ast)))
 
 
 (defn set-environment
@@ -204,7 +213,7 @@
             { :name keyword-name
               :value (getter keyword-name)}))
 
-        "NUM"
+        "VALUE"
         { :value (:value token)}))))
 
 
@@ -269,4 +278,44 @@
 
 
   (def tt (exec-ast tr ast)))
+
+(defn generate-code
+  [ast]
+  (if (empty? ast)
+    ""
+    (let [ token (first ast)
+           args (rest ast)]
+      (case (:type token)
+        "OP"
+        ;; 运算操作符们
+        (if (= 1 (count args))
+          (str  (:name token) (generate-code (first args)))
+          (str "(" (generate-code (first args))
+                   (apply str
+                     (map
+                       #(str " " (:name token) " " (generate-code %))
+                       (rest args)))
+                   ")"))
+
+        "Keyword"
+        (case (:name token)
+          "do"
+          (do
+            (apply str
+              (map
+                #(do
+                   (str (generate-code %) ";\n"))
+                args)))
+          "if"
+          (str
+            "if (" (generate-code (nth args 0)) ")\n"
+                   "{\n" (generate-code (nth args 1)) "\n}\nelse\n{\n"
+                   (generate-code (nth args 2)) "\n}\n"))
+
+        ;; 表示返回值可以提供的接口有 name 和 value 两个, name 表示可以作为右值使用。
+        "VAR"
+        (:name token)
+
+        "VALUE"
+        (str (:value token))))))
 

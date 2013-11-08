@@ -1,6 +1,7 @@
 (ns simbip.constructor
   (use simbip.structure)
   (use simbip.protocol)
+  (use simbip.parser)
   (:gen-class
    :methods [^:static [createToken [clojure.lang.PersistentArrayMap Integer] clojure.lang.PersistentArrayMap]
              ^:static [createPlace [String] simbip.structure.Place]
@@ -102,7 +103,11 @@
                        clojure.lang.PersistentArrayMap]
              ^:static [restoreSnapshot [simbip.structure.Compound
                                         clojure.lang.PersistentArrayMap]
-                       void]]))
+                       void]
+             ^:static [getAST [String]
+                       Object]
+             ^:static [convertCode [String]
+                       String]]))
 
 (defn -createToken
   [value timestamp]
@@ -216,3 +221,12 @@
         #(str (:name component) "." (name %) " = " (get varList %))
         (keys varList)))
     []))
+
+(defn -getAST
+  [action-string]
+  (get-raw-AST action-string))
+
+(defn -convertCode
+  [action-string]
+  (generate-code
+    (build-AST action-string)))
