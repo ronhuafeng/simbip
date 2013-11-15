@@ -218,7 +218,11 @@
   (if (contains? component :variables)
     (let [varList (deref (:variables component))]
       (map
-        #(str (:name component) "." (name %) " = " (get varList %))
+        (fn [v]
+          {
+           "name" (str (:name component) "." (name v))
+           "value" (str (get varList v))
+            })
         (keys varList)))
     []))
 
