@@ -132,7 +132,57 @@
     (fn [start end]
       {:pre [(integer? start)
              (integer? end)]}
-      (range start end))))
+      (range start end))
+
+    "boxInt"
+    (fn [int-value]
+      {:pre [(integer? int-value)]}
+      {:type 'boxed-int
+       :value int-value})
+
+    "unboxInt"
+    (fn [boxed-int-value]
+      {:pre [(= 'boxed-int (:type boxed-int-value))]}
+      (:value boxed-int-value))
+
+    "makeStack"
+    (fn []
+      '())
+
+    "pushStack"
+    (fn [s item]
+      (conj s item))
+    "peekStack"
+    (fn [s]
+      (peek s))
+    "popStack"
+    (fn [s]
+      (pop s))
+    "isEmptyStack"
+    (fn [s]
+      (= '() s))
+
+    "makeQueue"
+    (fn []
+      '())
+
+    "enQueue"
+    (fn [q item]
+      (reverse
+        (conj
+          (reverse q)
+          item)))
+    "firstQueue"
+    (fn [q]
+      (peek q))
+    "deQueue"
+    (fn [q]
+      (pop q))
+    "isEmptyQueue"
+    (fn [q]
+      (= '() q))
+
+    ))
 
 (defn get-trans-interface
   [env]
