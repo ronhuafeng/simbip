@@ -106,6 +106,9 @@
                        void]
              ^:static [getAST [String]
                        Object]
+             ^:static [isValidateAST
+                       [String]
+                       Boolean]
              ^:static [convertCode [String]
                        String]]))
 
@@ -229,6 +232,10 @@
 (defn -getAST
   [action-string]
   (get-raw-AST action-string))
+
+(defn -isValidateAST
+  [action-string]
+  (validate-AST? action-string))
 
 (defn -convertCode
   [action-string]

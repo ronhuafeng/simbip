@@ -1,7 +1,7 @@
 (ns simbip.parser
   (import java.lang.String)
   (:import
-    (ast ExprLexer ExprBuildTree ExprParser)
+    (ast ExprLexer ExprBuildTree ExprParser Expr)
     (java.io ByteArrayInputStream)
     (org.antlr.v4.runtime CommonTokenStream ANTLRInputStream)
     ))
@@ -16,6 +16,11 @@
          ast (.visitDo_action (ExprBuildTree.)
                (.do_action parser))]
     ast))
+
+(defn validate-AST?
+  [action-string]
+  (Expr/validateAST action-string))
+
 (defn build-AST
   [action-string]
   (let [ raw-ast (get-raw-AST action-string)

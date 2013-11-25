@@ -1,6 +1,7 @@
 (ns simbip.structures.Atomic-test
   (use simbip.protocol)
   (use simbip.structure)
+  (use simbip.parser)
   (:require [clojure.test :refer :all ]))
 
 (let [start (create-place "start")
@@ -86,6 +87,14 @@
           (fire! C1)
           (assign-port! C1 E1 {:timestamp 2})
           (is (= 3 (get-timestamp C1))))))))
+
+(deftest action-test
+  (testing "action validation"
+    (do
+      (is (= true
+            (validate-AST? "a=b;")))
+      (is (= false
+            (validate-AST? "a+/b;"))))))
 
 (deftest all-in-one-tests-with-vars
   (let [start (create-place "start")

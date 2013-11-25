@@ -1,4 +1,4 @@
-// Generated from G:\Tsmart Projects\ParseBIP\src\ast\Expr.g4 by ANTLR 4.1
+// Generated from E:\Tsmart Projects\ParseBIP\resource\Expr.g4 by ANTLR 4.1
 package ast;
 
 import org.antlr.v4.runtime.*;
@@ -100,7 +100,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Do_actionContext do_action() throws RecognitionException {
+	public final Do_actionContext do_action() throws Exception {
 		Do_actionContext _localctx = new Do_actionContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_do_action);
 		int _la;
@@ -122,10 +122,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -142,7 +140,7 @@ public class ExprParser extends Parser {
 		public TerminalNode TRUE() { return getToken(ExprParser.TRUE, 0); }
 		public TerminalNode INT() { return getToken(ExprParser.INT, 0); }
 		public Logical_or_expressionContext logical_or_expression() {
-			return getRuleContext(Logical_or_expressionContext.class, 0);
+			return getRuleContext(Logical_or_expressionContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(ExprParser.ID, 0); }
 		public TerminalNode STRING() { return getToken(ExprParser.STRING, 0); }
@@ -166,7 +164,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Primary_expressionContext primary_expression() throws RecognitionException {
+	public final Primary_expressionContext primary_expression() throws Exception {
 		Primary_expressionContext _localctx = new Primary_expressionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_primary_expression);
 		try {
@@ -219,10 +217,8 @@ public class ExprParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -238,13 +234,13 @@ public class ExprParser extends Parser {
 			return getRuleContext(Assignment_expressionContext.class,0);
 		}
 		public Logical_or_expressionContext logical_or_expression() {
-			return getRuleContext(Logical_or_expressionContext.class, 0);
+			return getRuleContext(Logical_or_expressionContext.class,0);
 		}
 		public If_then_else_expressionContext if_then_else_expression() {
-			return getRuleContext(If_then_else_expressionContext.class, 0);
+			return getRuleContext(If_then_else_expressionContext.class,0);
 		}
 		public If_then_else_expression_compatibleContext if_then_else_expression_compatible() {
-			return getRuleContext(If_then_else_expression_compatibleContext.class, 0);
+			return getRuleContext(If_then_else_expression_compatibleContext.class,0);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -265,12 +261,12 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final StatementContext statement() throws RecognitionException {
+	public final StatementContext statement() throws Exception {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_statement);
 		try {
 			setState(69);
-			switch ( getInterpreter().adaptivePredict(_input, 2, _ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
@@ -309,10 +305,8 @@ public class ExprParser extends Parser {
 				break;
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -358,7 +352,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final If_then_else_expressionContext if_then_else_expression() throws RecognitionException {
+	public final If_then_else_expressionContext if_then_else_expression() throws Exception {
 		If_then_else_expressionContext _localctx = new If_then_else_expressionContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_if_then_else_expression);
 		int _la;
@@ -409,10 +403,8 @@ public class ExprParser extends Parser {
 			setState(89); match(FI);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -456,7 +448,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final If_then_else_expression_compatibleContext if_then_else_expression_compatible() throws RecognitionException {
+	public final If_then_else_expression_compatibleContext if_then_else_expression_compatible() throws Exception {
 		If_then_else_expression_compatibleContext _localctx = new If_then_else_expression_compatibleContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_if_then_else_expression_compatible);
 		int _la;
@@ -559,10 +551,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -598,7 +588,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Assignment_expressionContext assignment_expression() throws RecognitionException {
+	public final Assignment_expressionContext assignment_expression() throws Exception {
 		Assignment_expressionContext _localctx = new Assignment_expressionContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_assignment_expression);
 		try {
@@ -609,10 +599,8 @@ public class ExprParser extends Parser {
 			setState(122); logical_or_expression();
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -652,7 +640,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Logical_or_expressionContext logical_or_expression() throws RecognitionException {
+	public final Logical_or_expressionContext logical_or_expression() throws Exception {
 		Logical_or_expressionContext _localctx = new Logical_or_expressionContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_logical_or_expression);
 		int _la;
@@ -676,10 +664,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -719,7 +705,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Logical_and_expressionContext logical_and_expression() throws RecognitionException {
+	public final Logical_and_expressionContext logical_and_expression() throws Exception {
 		Logical_and_expressionContext _localctx = new Logical_and_expressionContext(_ctx, getState());
 		enterRule(_localctx, 14, RULE_logical_and_expression);
 		int _la;
@@ -743,10 +729,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -784,7 +768,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Inclusive_or_expressionContext inclusive_or_expression() throws RecognitionException {
+	public final Inclusive_or_expressionContext inclusive_or_expression() throws Exception {
 		Inclusive_or_expressionContext _localctx = new Inclusive_or_expressionContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_inclusive_or_expression);
 		int _la;
@@ -809,10 +793,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -848,7 +830,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Exclusive_or_expressionContext exclusive_or_expression() throws RecognitionException {
+	public final Exclusive_or_expressionContext exclusive_or_expression() throws Exception {
 		Exclusive_or_expressionContext _localctx = new Exclusive_or_expressionContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_exclusive_or_expression);
 		int _la;
@@ -872,10 +854,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -911,7 +891,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final And_expressionContext and_expression() throws RecognitionException {
+	public final And_expressionContext and_expression() throws Exception {
 		And_expressionContext _localctx = new And_expressionContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_and_expression);
 		int _la;
@@ -935,10 +915,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -979,7 +957,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Equality_expressionContext equality_expression() throws RecognitionException {
+	public final Equality_expressionContext equality_expression() throws Exception {
 		Equality_expressionContext _localctx = new Equality_expressionContext(_ctx, getState());
 		enterRule(_localctx, 22, RULE_equality_expression);
 		int _la;
@@ -1014,10 +992,8 @@ public class ExprParser extends Parser {
 
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1062,7 +1038,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Relational_expressionContext relational_expression() throws RecognitionException {
+	public final Relational_expressionContext relational_expression() throws Exception {
 		Relational_expressionContext _localctx = new Relational_expressionContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_relational_expression);
 		int _la;
@@ -1109,10 +1085,8 @@ public class ExprParser extends Parser {
 
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1148,7 +1122,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Additive_expressionContext additive_expression() throws RecognitionException {
+	public final Additive_expressionContext additive_expression() throws Exception {
 		Additive_expressionContext _localctx = new Additive_expressionContext(_ctx, getState());
 		enterRule(_localctx, 26, RULE_additive_expression);
 		int _la;
@@ -1172,10 +1146,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1211,7 +1183,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Subtractive_expressionContext subtractive_expression() throws RecognitionException {
+	public final Subtractive_expressionContext subtractive_expression() throws Exception {
 		Subtractive_expressionContext _localctx = new Subtractive_expressionContext(_ctx, getState());
 		enterRule(_localctx, 28, RULE_subtractive_expression);
 		int _la;
@@ -1235,10 +1207,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1278,7 +1248,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Multiplicative_expressionContext multiplicative_expression() throws RecognitionException {
+	public final Multiplicative_expressionContext multiplicative_expression() throws Exception {
 		Multiplicative_expressionContext _localctx = new Multiplicative_expressionContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_multiplicative_expression);
 		int _la;
@@ -1324,10 +1294,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1361,7 +1329,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Unary_expressionContext unary_expression() throws RecognitionException {
+	public final Unary_expressionContext unary_expression() throws Exception {
 		Unary_expressionContext _localctx = new Unary_expressionContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_unary_expression);
 		try {
@@ -1413,10 +1381,8 @@ public class ExprParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1484,7 +1450,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Postfix_expressionContext postfix_expression() throws RecognitionException {
+	public final Postfix_expressionContext postfix_expression() throws Exception {
 		Postfix_expressionContext _localctx = new Postfix_expressionContext(_ctx, getState());
 		enterRule(_localctx, 34, RULE_postfix_expression);
 		int _la;
@@ -1539,10 +1505,8 @@ public class ExprParser extends Parser {
 				break;
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
@@ -1576,7 +1540,7 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final Argument_expression_listContext argument_expression_list() throws RecognitionException {
+	public final Argument_expression_listContext argument_expression_list() throws Exception {
 		Argument_expression_listContext _localctx = new Argument_expression_listContext(_ctx, getState());
 		enterRule(_localctx, 36, RULE_argument_expression_list);
 		int _la;
@@ -1600,10 +1564,8 @@ public class ExprParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+		catch (Exception e) {
+			 throw e;
 		}
 		finally {
 			exitRule();
