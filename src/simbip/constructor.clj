@@ -85,6 +85,9 @@
              ^:static [createConnection [simbip.structure.Compound
                                          simbip.structure.Port]
                        clojure.lang.PersistentArrayMap]
+             ^:static [createConnection [simbip.structure.Interaction
+                                         simbip.structure.Port]
+                       clojure.lang.PersistentArrayMap]
              ^:static [allSubComponents [simbip.structure.Compound]
                        clojure.lang.PersistentVector]
              ^:static [allSubComponents [simbip.structure.Atomic]

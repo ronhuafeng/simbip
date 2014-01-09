@@ -51,7 +51,7 @@
 
 
 (defrecord Port
-  [type name export? var-list tokens direction])
+  [type name export? var-list tokens direction parent])
 ;; var-list is a map of {:var-name-in-component :var-name-in-port's-type, ...}
 (defn create-port
   ([name export?]
@@ -61,7 +61,7 @@
      []
      (atom [])
      'both
-     ))
+     (atom nil)))
   ([name export? var-list]
    (->Port 'Port
      name
@@ -69,7 +69,7 @@
      var-list
      (atom [])
      'both
-     ))
+     (atom nil)))
   ([name export? var-list direction]
    (->Port 'Port
      name
@@ -77,7 +77,7 @@
      var-list
      (atom [])
      direction
-     )))
+     (atom nil))))
 
 (defn project-value
   ;; value:  {:x 1 :y 2 :z 3}   val-keys {:x :y}
@@ -104,19 +104,42 @@
 
 (defn value-through-port
   [value-map port]
-  (convert-value
-    (project-value
-      value-map
-      (keys (:var-list port)))
-    (:var-list port)))
+  (let [ result (convert-value
+                  (project-value
+                    value-map
+                    (keys (:var-list port)))
+                  (:var-list port))
+         ;_
+         #_(do
+           (println
+             "Value through port \""
+             (:name port) "\" in "
+             (if (nil? @(:parent port)) "nil" (:name @(:parent port))))
+           (println "        value maps:\t" (:var-list port))
+           (println "        Before:\t" value-map)
+           (println "        After:\t" result)
+           (println "\n\n"))]
+    result)
+  )
 (defn value-back-port
   [value-map port]
-  (let [var-list (:var-list port)]
-    (convert-value
-      (project-value
-        value-map
-        (vals var-list))
-      (zipmap (vals var-list) (keys var-list)))))
+  (let [var-list (:var-list port)
+        result (convert-value
+                 (project-value
+                   value-map
+                   (vals var-list))
+                 (zipmap (vals var-list) (keys var-list)))
+        ;_
+        #_(do
+          (println
+            "Value through (back) port \""
+            (:name port) "\" in "
+            (if (nil? @(:parent port)) "nil" (:name @(:parent port))))
+          (println "        value maps:\t" (:var-list port))
+          (println "        Before:\t" value-map)
+          (println "        After:\t" result)
+          (println "\n\n"))]
+    result))
 
 
 (extend-type Port
@@ -270,6 +293,8 @@
               var-map
               environment)]
      (do
+       (doseq [p (:ports c)]
+         (reset! (:parent p) c))
        (doseq [s (:places c)]
          (clear! s))
 
@@ -293,6 +318,8 @@
               var-map
               environment)]
      (do
+       (doseq [p (:ports c)]
+         (reset! (:parent p) c))
        (doseq [s (:places c)]
          (clear! s))
 
@@ -539,19 +566,23 @@
           environment (set-environment var-map)
           up-action (build-AST "")
           down-action (build-AST "")
-          guard-action (build-AST "true;")]
-      (->Interaction 'Interaction
-        name
-        port
-        connections
-        timestamp
-        { :up-action up-action
-          :down-action down-action
-          :guard-action guard-action}
-        var-map
-        environment
-        {} ;; var list
-        )))
+          guard-action (build-AST "true;")
+          i (->Interaction 'Interaction
+              name
+              port
+              connections
+              timestamp
+              { :up-action up-action
+                :down-action down-action
+                :guard-action guard-action}
+              var-map
+              environment
+              {} ;; var list
+              )]
+      (do
+        (if (not= nil port)
+          (reset! (:parent port) i))
+        i)))
   ([name port connections timestamp action-string-map var-list]
     (let [ var-map (atom {})
            environment (set-environment var-map)
@@ -566,19 +597,23 @@
                (println "down-action: " (:down-action action-string-map))
                (println down-action)
                (println "guard-action: " (:guard-action action-string-map)))
+           i (->Interaction 'Interaction
+               name
+               port
+               connections
+               timestamp
+               { :up-action up-action
+                 :down-action down-action
+                 :guard-action guard-action}
+               var-map
+               environment
+               var-list
+               )
           ]
-      (->Interaction 'Interaction
-        name
-        port
-        connections
-        timestamp
-        { :up-action up-action
-          :down-action down-action
-          :guard-action guard-action}
-        var-map
-        environment
-        var-list
-        ))))
+      (do
+        (if (not= nil port)
+          (reset! (:parent port) i))
+        i))))
 
 
 ;; 是否 interaction 连接的所有 port 都是激活的
@@ -949,7 +984,8 @@
           })))
   (retrieve-port
     [this port]
-    (let [export (get-export this port)
+    (let [;;_ #_(println "Get port " (:name port) " from " (:name this) ".\n")
+          export (get-export this port)
           inner-port (retrieve-port
                        (:source-component export)
                        (:source export))
