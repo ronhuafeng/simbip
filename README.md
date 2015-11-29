@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/ronhuafeng/simbip.svg?branch=master)](https://travis-ci.org/ronhuafeng/simbip)
+
+---
+
 # simbip
 
 A simulator writtern in Clojure for the simulation of BIP modeling language.
