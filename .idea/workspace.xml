@@ -795,7 +795,7 @@
       <workItem from="1477651359791" duration="2290000" />
       <workItem from="1477968217468" duration="68000" />
       <workItem from="1477978217297" duration="2051000" />
-      <workItem from="1478159512638" duration="10826000" />
+      <workItem from="1478159512638" duration="10868000" />
     </task>
     <task id="LOCAL-00001" summary="增加了 interaction 上 guard 的处理&#10;&#10;后续：&#10;transition 上的 guard 处理">
       <created>1379491853765</created>
@@ -930,11 +930,18 @@
       <option name="project" value="LOCAL" />
       <updated>1478525973074</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Add comment.">
+      <created>1478525989528</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1478525989528</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15544000" />
+    <option name="totallyTimeSpent" value="15586000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
