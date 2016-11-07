@@ -17,10 +17,16 @@
                (.do_action parser))]
     ast))
 
+; Check if the action string can be transformed into a valid AST.
 (defn validate-AST?
   [action-string]
   (Expr/validateAST action-string))
 
+; Transform AST constructed in 'ExprBuildTree.java' into the AST with Clojure's map data representation.
+; 'node' is the AST node
+; 'tag' is the type of the node
+; 'value' is the name of the node, e.g., for an operator '+' or '-', etc. for a keyword 'a' or 'b', etc.
+; 'arg-list' is the sub-structure of the node if the node represents a complex structure, e.g. a function call.
 (defn build-AST
   [action-string]
   (let [ raw-ast (get-raw-AST action-string)
@@ -51,7 +57,8 @@
                           :value (get node "value")})))]
     (builder raw-ast)))
 
-
+; Use atomic-map as the evaluation environment of variables
+; accept two actions: 'get and 'set, get the value with name "bind-name" in atomic-map and set the value.
 (defn set-environment
   [atomic-map]
   (fn [action]
@@ -63,10 +70,12 @@
       (fn [bind-name value]
         (swap! atomic-map assoc bind-name value)))))
 
+; merge two evaluation environments,  extern-map into atomic-map, override existed values.
 (defn merge-environment
   [atomic-map extern-map]
   (swap! atomic-map into extern-map))
 
+; Translate an operator node to a corresponding function
 (defn operator-table
   [op-name]
   (case op-name
@@ -102,6 +111,7 @@
           (setter name value))
     ))
 
+; Translate a keyword-operation node to a corresponding function
 (defn keyword-table
   [k]
   (case k
@@ -116,6 +126,7 @@
         nil
         (last stmt-values)))))
 
+; Translate a function node to a corresponding function
 (defn function-table
   [fun]
   (case fun
@@ -189,6 +200,9 @@
 
     ))
 
+
+; Construct a generator which transforms an AST into a Clojure expression.
+; The initial value of variables is provided by "env" environment, mostly an empty map.
 (defn get-trans-interface
   [env]
   (let [setter (env 'set)
@@ -271,7 +285,7 @@
         "VALUE"
         { :value (:value token)}))))
 
-
+; Execute an AST through a translate interface "trans" (which contains initial values of variables).
 (defn exec-ast
   [trans ast]
   (if (empty? ast)
@@ -302,6 +316,7 @@
               (map #(exec-ast trans %) leafs)))
           tr-root)))))
 
+; Synchronize values in BIP ports and BIP interactions.
 (defn environment-synchronize
   [val-map env2-map key-map]
   "for key :k in key-map, merge {(:k key-map) (:k val-map)} into env2-map"
@@ -315,6 +330,7 @@
           {(get key-map k) (get val-map k)})
         (keys key-map)))))
 
+; Compute an action on a interaction.
 (defn compute-action!
   [ast env]
   (if (empty? ast)
