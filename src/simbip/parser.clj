@@ -3,8 +3,8 @@
   (:import
     (ast ExprLexer ExprBuildTree ExprParser Expr)
     (java.io ByteArrayInputStream)
-    (org.antlr.v4.runtime CommonTokenStream ANTLRInputStream)
-    ))
+    (org.antlr.v4.runtime CommonTokenStream ANTLRInputStream)))
+    
 
 (defn get-raw-AST
   [action-string]
@@ -98,9 +98,9 @@
            (if (some true? args)
              true
              false))
-    "=" (fn [setter name value ]
-          (setter name value))
-    ))
+    "=" (fn [setter name value]
+          (setter name value))))
+    
 
 (defn keyword-table
   [k]
@@ -185,9 +185,9 @@
       (pop q))
     "isEmptyQueue"
     (fn [q]
-      (= '() q))
+      (= '() q))))
 
-    ))
+    
 
 (defn get-trans-interface
   [env]
@@ -212,7 +212,7 @@
             { :operate
               (fn [& args]
                 (do
-                  #_(println v " applys to " args )
+                  #_(println v " applys to " args)
                   {:value
                    (apply op
                      (map
@@ -247,8 +247,8 @@
 
         (let [action (keyword-table (:name token))]
           { :operate (fn [& args]
-                       {:value (apply action (map :value args))})
-            })
+                       {:value (apply action (map :value args))})})
+            
 
         "FunctionCall"
         (let [action (function-table (:name token))]

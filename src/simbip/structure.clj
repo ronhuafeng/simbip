@@ -5,7 +5,7 @@
 
 (defn create-token
   [value timestamp]
-   {:timestamp timestamp :value value})
+  {:timestamp timestamp :value value})
 
 (defrecord Place
   [type name active?])
@@ -111,16 +111,16 @@
                   (:var-list port))
          ;_
          #_(do
-           (println
-             "Value through port \""
-             (:name port) "\" in "
-             (if (nil? @(:parent port)) "nil" (:name @(:parent port))))
-           (println "        value maps:\t" (:var-list port))
-           (println "        Before:\t" value-map)
-           (println "        After:\t" result)
-           (println "\n\n"))]
-    result)
-  )
+            (println
+              "Value through port \""
+              (:name port) "\" in "
+              (if (nil? @(:parent port)) "nil" (:name @(:parent port))))
+            (println "        value maps:\t" (:var-list port))
+            (println "        Before:\t" value-map)
+            (println "        After:\t" result)
+            (println "\n\n"))]
+    result))
+  
 (defn value-back-port
   [value-map port]
   (let [var-list (:var-list port)
@@ -131,14 +131,14 @@
                  (zipmap (vals var-list) (keys var-list)))
         ;_
         #_(do
-          (println
-            "Value through (back) port \""
-            (:name port) "\" in "
-            (if (nil? @(:parent port)) "nil" (:name @(:parent port))))
-          (println "        value maps:\t" (:var-list port))
-          (println "        Before:\t" value-map)
-          (println "        After:\t" result)
-          (println "\n\n"))]
+           (println
+             "Value through (back) port \""
+             (:name port) "\" in "
+             (if (nil? @(:parent port)) "nil" (:name @(:parent port))))
+           (println "        value maps:\t" (:var-list port))
+           (println "        Before:\t" value-map)
+           (println "        After:\t" result)
+           (println "\n\n"))]
     result))
 
 
@@ -219,17 +219,17 @@
      (build-AST "") ;; action
      (atom nil)))
   ([name source target port timestamp guard-string action-string]
-    (let [ action! (build-AST action-string)
-           guard? (build-AST (str guard-string ";"))]
-      (->Transition 'Transition
-        name
-        source
-        target
-        port
-        timestamp
-        guard? ;; guard
-        action! ;; action
-        (atom nil)))))
+   (let [ action! (build-AST action-string)
+          guard? (build-AST (str guard-string ";"))]
+     (->Transition 'Transition
+       name
+       source
+       target
+       port
+       timestamp
+       guard? ;; guard
+       action! ;; action
+       (atom nil)))))
 
 
 
@@ -388,8 +388,8 @@
     {:pre [(not (nil? @(:atomic-parent this)))]}
     (fire-transition
       @(:atomic-parent this)
-      this))
-  )
+      this)))
+  
 
 (extend-type Atomic
   Queryable
@@ -528,16 +528,16 @@
       ;; 如果 token 中的 key 是 port 的 var-list 中的 val 中的值，说明这个变量是被 port 映射出来的
       ;; 在外面的名字是 var-list 中 key 对应的 val 的值
         #_(let [assigned-value (value-back-port
-                               (:value token)
-                               port)]
-          (doseq [attr (keys assigned-value)]
-            (if (contains?
-                  (deref (:variables this))
-                  attr)
-              (set-variable
-                this
-                attr
-                (get assigned-value attr)))))
+                                (:value token)
+                                port)]
+           (doseq [attr (keys assigned-value)]
+             (if (contains?
+                   (deref (:variables this))
+                   attr)
+               (set-variable
+                 this
+                 attr
+                 (get assigned-value attr)))))
         (doseq [attr (keys (:value token))]
           (let [t (some
                     #(if (= attr (val %)) %)
@@ -562,11 +562,41 @@
 
 (defn create-interaction
   ([^String name port connections ^Integer timestamp]
-    (let [var-map (atom {})
+   (let [var-map (atom {})
+         environment (set-environment var-map)
+         up-action (build-AST "")
+         down-action (build-AST "")
+         guard-action (build-AST "true;")
+         i (->Interaction 'Interaction
+             name
+             port
+             connections
+             timestamp
+             { :up-action up-action
+               :down-action down-action
+               :guard-action guard-action}
+             var-map
+             environment
+             {})] ;; var list
+              
+     (do
+       (if (not= nil port)
+         (reset! (:parent port) i))
+       i)))
+  ([name port connections timestamp action-string-map var-list]
+   (let [ var-map (atom {})
           environment (set-environment var-map)
-          up-action (build-AST "")
-          down-action (build-AST "")
-          guard-action (build-AST "true;")
+          up-action (build-AST (:up-action action-string-map))
+          down-action (build-AST (:down-action action-string-map))
+          guard-action (build-AST (str (:guard-action action-string-map) ";"))
+           ;;_
+          #_(do
+              (println up-action)
+              (println "up-action: " (:up-action action-string-map))
+              (println down-action)
+              (println "down-action: " (:down-action action-string-map))
+              (println down-action)
+              (println "guard-action: " (:guard-action action-string-map)))
           i (->Interaction 'Interaction
               name
               port
@@ -577,43 +607,13 @@
                 :guard-action guard-action}
               var-map
               environment
-              {} ;; var list
-              )]
-      (do
-        (if (not= nil port)
-          (reset! (:parent port) i))
-        i)))
-  ([name port connections timestamp action-string-map var-list]
-    (let [ var-map (atom {})
-           environment (set-environment var-map)
-           up-action (build-AST (:up-action action-string-map))
-           down-action (build-AST (:down-action action-string-map))
-           guard-action (build-AST (str (:guard-action action-string-map) ";"))
-           ;;_
-           #_(do
-               (println up-action)
-               (println "up-action: " (:up-action action-string-map))
-               (println down-action)
-               (println "down-action: " (:down-action action-string-map))
-               (println down-action)
-               (println "guard-action: " (:guard-action action-string-map)))
-           i (->Interaction 'Interaction
-               name
-               port
-               connections
-               timestamp
-               { :up-action up-action
-                 :down-action down-action
-                 :guard-action guard-action}
-               var-map
-               environment
-               var-list
-               )
-          ]
-      (do
-        (if (not= nil port)
-          (reset! (:parent port) i))
-        i))))
+              var-list)]
+               
+          
+     (do
+       (if (not= nil port)
+         (reset! (:parent port) i))
+       i))))
 
 
 ;; 是否 interaction 连接的所有 port 都是激活的
@@ -682,8 +682,8 @@
           (:port conn)
           ;; 最最关键的构造 token 的过程
           {:timestamp (+
-                   (:timestamp interaction)
-                   timestamp)
+                       (:timestamp interaction)
+                       timestamp)
            :value (project-value
                     (deref ports-env)
                     (vals (:var-list (:port conn))))})))))
@@ -715,8 +715,8 @@
            (:value (compute-action!
                      (:guard-action (:action this))
                      (:environment this))))
-         false)
-       ))
+         false)))
+       
     ([this port]
      (if (or
            (nil? port) ;; if port is nil or internal port return false.
@@ -728,8 +728,8 @@
            (:value (compute-action!
                      (:guard-action (:action this))
                      (:environment this))))
-         false)
-       )))
+         false))))
+       
 
   Accessible
 
@@ -757,8 +757,8 @@
            ;; 生成一个 token 中使用的 value 用于向上传递
            (value-through-port
              (deref (:variables this))
-             port)
-           )
+             port))
+           
          (get-timestamp this))]
       []))
   #_("assign-port! : Get a token from export, means the interaction is
@@ -784,8 +784,8 @@
       this
       (create-token
         {}
-        (get-timestamp this))))
-  )
+        (get-timestamp this)))))
+  
 
 
 (defrecord Compound
@@ -795,21 +795,21 @@
 
 (defn create-compound
   ([name subcomponents exports]
-    (let [ports (map :target exports)]
-      (->Compound 'Compound
-        name
-        subcomponents
-        exports
-        ports
-        [])))
+   (let [ports (map :target exports)]
+     (->Compound 'Compound
+       name
+       subcomponents
+       exports
+       ports
+       [])))
   ([name subcomponents exports priorities]
-    (let [ports (map :target exports)]
-      (->Compound 'Compound
-        name
-        subcomponents
-        exports
-        ports
-        priorities))))
+   (let [ports (map :target exports)]
+     (->Compound 'Compound
+       name
+       subcomponents
+       exports
+       ports
+       priorities))))
 
 
 (defn- some-enable?
@@ -980,8 +980,8 @@
         (:source export)
         {
          :value assigned-value
-         :timestamp (:timestamp token)
-          })))
+         :timestamp (:timestamp token)})))
+          
   (retrieve-port
     [this port]
     (let [;;_ #_(println "Get port " (:name port) " from " (:name this) ".\n")
@@ -1015,7 +1015,7 @@
     {:pre [(pos? (count selections))
            "The count of enabled components is more than one."]}
     (let [min-timestamp (apply min
-                     (map get-timestamp selections))]
+                         (map get-timestamp selections))]
       (rand-nth (filter
                   #(= min-timestamp (get-timestamp %))
                   selections))))
