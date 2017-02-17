@@ -50,8 +50,8 @@
                                           clojure.lang.PersistentVector
                                           Integer
                                           clojure.lang.PersistentArrayMap  ;; action-string-map
-                                          clojure.lang.PersistentArrayMap  ;; var-list map
-                                          ]
+                                          clojure.lang.PersistentArrayMap]  ;; var-list map
+                                          
                        simbip.structure.Interaction]
              ^:static [createCompound [String
                                        clojure.lang.PersistentVector
@@ -200,7 +200,7 @@
 
 (defn -createCompound
   ([name subcomponents exports]
-    (create-compound name subcomponents exports))
+   (create-compound name subcomponents exports))
   ( [name subcomponents exports priorities]
     (create-compound name subcomponents exports priorities)))
 
@@ -227,8 +227,8 @@
         (fn [v]
           {
            "name" (str (:name component) "." (name v))
-           "value" (str (get varList v))
-            })
+           "value" (str (get varList v))})
+            
         (keys varList)))
     []))
 
